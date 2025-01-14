@@ -1,0 +1,26 @@
+HKCR
+{
+	ChromeOps.soft.1 = s 'ChromeOpsSoft class'
+	{
+		CLSID = s '{c44295a9-d02c-49aa-95a1-f1bbabb8527a}'
+	}
+	ChromeOps.soft = s 'ChromeOpsSoft class'
+	{		
+		CurVer = s 'ChromeOps.soft.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {c44295a9-d02c-49aa-95a1-f1bbabb8527a} = s 'ChromeOpsSoft class'
+		{
+			ProgID = s 'ChromeOps.soft.1'
+			VersionIndependentProgID = s 'ChromeOps.soft'
+			ForceRemove Programmable
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			TypeLib = s '{51fb357f-0e50-40b7-bcbe-290e42e2af6c}'
+			Version = s '1.0'
+		}
+	}
+}

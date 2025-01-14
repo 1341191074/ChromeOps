@@ -1,0 +1,15 @@
+HKCR
+{
+	NoRemove CLSID
+	{
+		ForceRemove {bd6c7821-d56c-4b78-87fc-52713f38eecd} = s 'CompReg Class'
+		{
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			TypeLib = s '{51fb357f-0e50-40b7-bcbe-290e42e2af6c}'
+			Version = s '1.0'
+		}
+	}
+}
