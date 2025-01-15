@@ -29,7 +29,7 @@ int main()
 	chrome.pushArgs("--user-data-dir=E:\\test\\ud0");
 	//chrome.launch("C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe", false);
 	int ret = chrome.chromeBind("localhost", 9222);
-	string html = chrome.findTargetList();
+		string html = chrome.findTargetList();
 	std::vector<std::string> tokens;
 	stringUtils.split(html, '====', tokens);
 	string tab = tokens.at(0);

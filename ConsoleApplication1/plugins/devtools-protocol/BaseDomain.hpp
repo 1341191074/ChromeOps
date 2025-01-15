@@ -79,7 +79,6 @@ protected:
 	nlohmann::json sendCommandAndWait(const std::string& method, const std::map<std::string, std::variant<int, std::string, bool, float, nlohmann::json>>& params, int timeout = 2000) {
 		int cmdIdx = -1;
 		std::string cmd = this->getSendData(method, &cmdIdx, params);
-		std::cout << cmd << std::endl;
 		return this->sendMessage(cmd, cmdIdx, timeout);
 	}
 

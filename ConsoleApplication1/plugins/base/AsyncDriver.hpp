@@ -82,6 +82,7 @@ public:
 	void on_message(websocketpp::connection_hdl hdl, client::message_ptr msg) {
 		std::lock_guard<std::mutex> lock(m_mutex);
 		nlohmann::json obj = nlohmann::json::parse(msg->get_payload());
+		//std::cout << obj << std::endl;
 		if (obj.contains("method")) { // Events
 			for (const auto& callback : callbacks) {
 				string method = obj["method"];

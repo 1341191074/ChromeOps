@@ -11,7 +11,7 @@ call chrome.pushArgs("--remote-debugging-port=9222")
 call chrome.pushArgs("--user-data-dir=E:\\test\\ud0")
 '启动浏览器
 'call cc.launch("C:\\Users\\Reach\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe")
-'call cc.launch("C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe",false)
+'call chrome.launch("C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe",false)
 'WScript.Sleep 200
 ss=chrome.chromeBind("localhost",9222)
 ss=chrome.findTargetList()
@@ -22,6 +22,12 @@ dim tab
 tab=Split(ss,"|||")
 WScript.Echo tab(0)
 ss=chrome.switchTab(tab(0))
+
+WScript.Sleep 1000
+call chrome.clearBrowserCache()
+call chrome.clearBrowserCookies()
+WScript.Sleep 1000
+
 call chrome.navigate("https://www.baidu.com", "")
 WScript.Sleep 1000
 dim finished 
@@ -33,10 +39,8 @@ while finished=0
     finished = chrome.isLoadingFinished()
 wend
 
-WScript.Sleep 2000
 ss = chrome.getCookies("[""https://www.baidu.com""]")
 WScript.Echo ss
-
 
 WScript.Echo "8秒后自动关闭"
 WScript.Sleep 8000

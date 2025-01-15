@@ -135,7 +135,7 @@ STDMETHODIMP CChromeOpsSoft::clearBrowserCache()
 
 STDMETHODIMP CChromeOpsSoft::clearBrowserCookies()
 {
-	this->clearBrowserCookies();
+	this->chrome.clearBrowserCookies();
 	return S_OK;
 }
 
