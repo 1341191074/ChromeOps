@@ -48,11 +48,12 @@ int main()
 	//text = stringUtils.GBKToUTF8(text);
 	//chrome.inputText(selector,text);
 
-	chrome.navigate("https://www.sina.com.cn/", "");
+	chrome.navigate("https://www.baidu.com", "");
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	boolean finished = chrome.isLoadingFinished();//0=没有加载完成 1=加载完成
-	std::cout << std::to_string(finished) << std::endl;
-	mylog("执行完成");
+	nlohmann::json obj = nlohmann::json::parse("[\"https://www.baidu.com\"]");
+	string cookies = chrome.getCookies(obj);
+	std::cout << cookies << std::endl;
 
 	while (true) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));

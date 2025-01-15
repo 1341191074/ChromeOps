@@ -22,7 +22,7 @@ dim tab
 tab=Split(ss,"|||")
 WScript.Echo tab(0)
 ss=chrome.switchTab(tab(0))
-call chrome.navigate("http://www.sina.com.cn", "")
+call chrome.navigate("https://www.baidu.com", "")
 WScript.Sleep 1000
 dim finished 
 '//0=没有加载完成 1=加载完成
@@ -32,6 +32,10 @@ while finished=0
     WScript.Sleep 500
     finished = chrome.isLoadingFinished()
 wend
+
+WScript.Sleep 2000
+ss = chrome.getCookies("[""https://www.baidu.com""]")
+WScript.Echo ss
 
 
 WScript.Echo "8秒后自动关闭"

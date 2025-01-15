@@ -42,6 +42,12 @@ interface IChromeOpsSoft : IDispatch
 	[id(10)] HRESULT runScript([in]BSTR expression, [out, retval]BSTR* retVal);
 	[id(11)] HRESULT captureScreenshot([in]BSTR format, [in]int quality, [in]int x, [in]int y, [in]int width, [in]int height, [in]float scale, [in]BSTR imgFullPath);
 	[id(12)] HRESULT inputText([in]BSTR selector, [in]BSTR txt);
+	[id(13)] HRESULT getCookies([in]BSTR urls, [out, retval]BSTR* retVal);
+	[id(14)] HRESULT setCookie([in]BSTR name, [in]BSTR value, [in]BSTR url, [in]BSTR domain, [in]BSTR path, [in]int secure, [in]int httpOnly, [in]BSTR sameSite, [in]int expires);
+	[id(15)] HRESULT setCookies([in]BSTR jsonCookies);
+	[id(16)] HRESULT clearBrowserCache();
+	[id(17)] HRESULT clearBrowserCookies();
+	[id(18)] HRESULT setCacheDisabled([in]int cacheDisabled);
 };
 [
 	uuid(51fb357f-0e50-40b7-bcbe-290e42e2af6c),

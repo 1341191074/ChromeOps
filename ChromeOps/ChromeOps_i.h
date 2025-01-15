@@ -359,6 +359,31 @@ EXTERN_C const IID IID_IChromeOpsSoft;
             /* [in] */ BSTR selector,
             /* [in] */ BSTR txt) = 0;
         
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE getCookies( 
+            /* [in] */ BSTR urls,
+            /* [retval][out] */ BSTR *retVal) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE setCookie( 
+            /* [in] */ BSTR name,
+            /* [in] */ BSTR value,
+            /* [in] */ BSTR url,
+            /* [in] */ BSTR domain,
+            /* [in] */ BSTR path,
+            /* [in] */ int secure,
+            /* [in] */ int httpOnly,
+            /* [in] */ BSTR sameSite,
+            /* [in] */ int expires) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE setCookies( 
+            /* [in] */ BSTR jsonCookies) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE clearBrowserCache( void) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE clearBrowserCookies( void) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE setCacheDisabled( 
+            /* [in] */ int cacheDisabled) = 0;
+        
     };
     
     
@@ -501,6 +526,43 @@ EXTERN_C const IID IID_IChromeOpsSoft;
             /* [in] */ BSTR selector,
             /* [in] */ BSTR txt);
         
+        DECLSPEC_XFGVIRT(IChromeOpsSoft, getCookies)
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *getCookies )( 
+            IChromeOpsSoft * This,
+            /* [in] */ BSTR urls,
+            /* [retval][out] */ BSTR *retVal);
+        
+        DECLSPEC_XFGVIRT(IChromeOpsSoft, setCookie)
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *setCookie )( 
+            IChromeOpsSoft * This,
+            /* [in] */ BSTR name,
+            /* [in] */ BSTR value,
+            /* [in] */ BSTR url,
+            /* [in] */ BSTR domain,
+            /* [in] */ BSTR path,
+            /* [in] */ int secure,
+            /* [in] */ int httpOnly,
+            /* [in] */ BSTR sameSite,
+            /* [in] */ int expires);
+        
+        DECLSPEC_XFGVIRT(IChromeOpsSoft, setCookies)
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *setCookies )( 
+            IChromeOpsSoft * This,
+            /* [in] */ BSTR jsonCookies);
+        
+        DECLSPEC_XFGVIRT(IChromeOpsSoft, clearBrowserCache)
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *clearBrowserCache )( 
+            IChromeOpsSoft * This);
+        
+        DECLSPEC_XFGVIRT(IChromeOpsSoft, clearBrowserCookies)
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *clearBrowserCookies )( 
+            IChromeOpsSoft * This);
+        
+        DECLSPEC_XFGVIRT(IChromeOpsSoft, setCacheDisabled)
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *setCacheDisabled )( 
+            IChromeOpsSoft * This,
+            /* [in] */ int cacheDisabled);
+        
         END_INTERFACE
     } IChromeOpsSoftVtbl;
 
@@ -572,6 +634,24 @@ EXTERN_C const IID IID_IChromeOpsSoft;
 
 #define IChromeOpsSoft_inputText(This,selector,txt)	\
     ( (This)->lpVtbl -> inputText(This,selector,txt) ) 
+
+#define IChromeOpsSoft_getCookies(This,urls,retVal)	\
+    ( (This)->lpVtbl -> getCookies(This,urls,retVal) ) 
+
+#define IChromeOpsSoft_setCookie(This,name,value,url,domain,path,secure,httpOnly,sameSite,expires)	\
+    ( (This)->lpVtbl -> setCookie(This,name,value,url,domain,path,secure,httpOnly,sameSite,expires) ) 
+
+#define IChromeOpsSoft_setCookies(This,jsonCookies)	\
+    ( (This)->lpVtbl -> setCookies(This,jsonCookies) ) 
+
+#define IChromeOpsSoft_clearBrowserCache(This)	\
+    ( (This)->lpVtbl -> clearBrowserCache(This) ) 
+
+#define IChromeOpsSoft_clearBrowserCookies(This)	\
+    ( (This)->lpVtbl -> clearBrowserCookies(This) ) 
+
+#define IChromeOpsSoft_setCacheDisabled(This,cacheDisabled)	\
+    ( (This)->lpVtbl -> setCacheDisabled(This,cacheDisabled) ) 
 
 #endif /* COBJMACROS */
 

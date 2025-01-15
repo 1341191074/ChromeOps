@@ -3,6 +3,7 @@
 #include "pch.h"
 #include <string>
 #include "ChromeOpsSoft.h"
+#include "nlohmann/json.hpp"
 
 // CChromeOpsSoft
 STDMETHODIMP CChromeOpsSoft::ping(BSTR str, BSTR* retVal)
@@ -91,5 +92,56 @@ STDMETHODIMP CChromeOpsSoft::captureScreenshot(BSTR format, int quality, int x, 
 STDMETHODIMP CChromeOpsSoft::inputText(BSTR selector, BSTR txt)
 {
 	this->chrome.inputText(this->stringUtils.BSTRToString(selector), this->stringUtils.BSTRToString(txt));
+	return S_OK;
+}
+
+
+STDMETHODIMP CChromeOpsSoft::getCookies(BSTR urls, BSTR* retVal)
+{
+	string jsonArray = this->stringUtils.BSTRToString(urls);
+	nlohmann::json obj = nlohmann::json::parse(jsonArray);
+	string ret = this->chrome.getCookies(obj);
+	*retVal = this->stringUtils.stringToBSTR(ret);
+	return S_OK;
+}
+
+
+STDMETHODIMP CChromeOpsSoft::setCookie(BSTR name, BSTR value, BSTR url, BSTR domain, BSTR path, int secure, int httpOnly, BSTR sameSite, int expires)
+{
+	string sName = this->stringUtils.BSTRToString(name);
+	string sValue = this->stringUtils.BSTRToString(value);
+	string sUrl = this->stringUtils.BSTRToString(url);
+	string sDomain = this->stringUtils.BSTRToString(domain);
+	string sPath = this->stringUtils.BSTRToString(path);
+	string sSameSite = this->stringUtils.BSTRToString(sameSite);
+	this->chrome.setCookie(sName, sValue, sUrl, sDomain, sPath, secure, httpOnly, sSameSite, expires);
+	return S_OK;
+}
+
+
+STDMETHODIMP CChromeOpsSoft::setCookies(BSTR jsonCookies)
+{
+	this->chrome.setCookies(this->stringUtils.BSTRToString(jsonCookies));
+	return S_OK;
+}
+
+
+STDMETHODIMP CChromeOpsSoft::clearBrowserCache()
+{
+	this->chrome.clearBrowserCache();
+	return S_OK;
+}
+
+
+STDMETHODIMP CChromeOpsSoft::clearBrowserCookies()
+{
+	this->clearBrowserCookies();
+	return S_OK;
+}
+
+
+STDMETHODIMP CChromeOpsSoft::setCacheDisabled(int cacheDisabled)
+{
+	this->chrome.setCacheDisabled(cacheDisabled);
 	return S_OK;
 }

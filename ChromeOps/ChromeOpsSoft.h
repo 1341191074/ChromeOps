@@ -61,6 +61,12 @@ public:
     STDMETHOD(runScript)(BSTR expression, BSTR* retVal);
     STDMETHOD(captureScreenshot)(BSTR format, int quality, int x, int y, int width, int height, float scale, BSTR imgFullPath);
     STDMETHOD(inputText)(BSTR selector, BSTR txt);
+    STDMETHOD(getCookies)(BSTR urls, BSTR* retVal);
+    STDMETHOD(setCookie)(BSTR name, BSTR value, BSTR url, BSTR domain, BSTR path, int secure, int httpOnly, BSTR sameSite, int expires);
+    STDMETHOD(setCookies)(BSTR jsonCookies);
+    STDMETHOD(clearBrowserCache)();
+    STDMETHOD(clearBrowserCookies)();
+    STDMETHOD(setCacheDisabled)(int cacheDisabled);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ChromeOpsSoft), CChromeOpsSoft)

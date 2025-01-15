@@ -201,6 +201,30 @@ public:
 		this->runtime->releaseObject(objectId);
 	}
 
+	string getCookies(nlohmann::json urls) {
+		nlohmann::json ret = this->network->getCookies(urls);
+		return ret.dump();
+	}
+
+	void setCookie(string name, string value, string url = "", string domain = "", string path = "", bool secure = false, bool httpOnly = false, string sameSite = "", int expires = -1) {
+		this->network->setCookie(name, value, url, domain, path, secure, httpOnly, sameSite, expires);
+	}
+
+	void setCookies(string jsonCookies) {
+		this->network->setCookies(jsonCookies);
+	}
+
+	void clearBrowserCache() {
+		this->network->clearBrowserCache();
+	}
+
+	void clearBrowserCookies() {
+		this->network->clearBrowserCookies();
+	}
+
+	void setCacheDisabled(bool cacheDisabled = false) {
+		this->network->setCacheDisabled(cacheDisabled);
+	}
 #pragma endregion
 
 };

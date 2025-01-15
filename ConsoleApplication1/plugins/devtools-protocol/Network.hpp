@@ -47,4 +47,59 @@ public:
 		}
 		return isFinished;
 	}
+
+	nlohmann::json getCookies(nlohmann::json urls) {
+		map<string, std::variant<int, string, bool, float, nlohmann::json>> params;
+		params["urls"] = urls;
+		nlohmann::json retJson = this->sendCommandAndWait("Network.getCookies", params, 10000);
+		return retJson["cookies"];
+	}
+
+	void setCookie(string name, string value, string url = "", string domain = "", string path = "", bool secure = false, bool httpOnly = false, string sameSite = "", int expires = -1) {
+		map<string, std::variant<int, string, bool, float, nlohmann::json>> params;
+		params["name"] = name;
+		params["value"] = value;
+		if ("" != url) {
+			params["url"] = url;
+		}
+		if ("" != domain) {
+			params["domain"] = domain;
+		}
+		if ("" != path) {
+			params["path"] = path;
+		}
+		if (secure) {
+			params["secure"] = secure;
+		}
+		if (httpOnly) {
+			params["httpOnly"] = httpOnly;
+		}
+		if ("" != sameSite) {
+			params["sameSite"] = sameSite;
+		}
+		if (expires > -1) {
+			params["expires"] = expires;
+		}
+		this->sendCommandNoWait("Network.setCookie", params);
+	}
+
+	void setCookies(string jsonCookies) {
+		map<string, std::variant<int, string, bool, float, nlohmann::json>> params;
+		params["cookies"] = jsonCookies;
+		this->sendCommandNoWait("Network.setCookies", params);
+	}
+
+	void clearBrowserCache() {
+		this->sendCommandNoWait("Network.clearBrowserCache", {});
+	}
+
+	void clearBrowserCookies() {
+		this->sendCommandNoWait("Network.clearBrowserCookies", {});
+	}
+
+	void setCacheDisabled(bool cacheDisabled = false) {
+		map<string, std::variant<int, string, bool, float, nlohmann::json>> params;
+		params["cacheDisabled"] = cacheDisabled;
+		this->sendCommandNoWait("Network.setCacheDisabled", params);
+	}
 };
