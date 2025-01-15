@@ -41,7 +41,7 @@ int main()
 	//chrome.runScript("function mylog(){console.log(\"test\");}mylog();");
 	//chrome.runScript("var i;i=1;");
 
-	//chrome.captureScreenshot("jpeg", 100, 0, 0, 500, 600, 1.0, "output.jpg");
+
 
 	//string selector = "#kw";
 	//string text = "c++开发工具";
@@ -54,6 +54,9 @@ int main()
 	nlohmann::json obj = nlohmann::json::parse("[\"https://www.baidu.com\"]");
 	string cookies = chrome.getCookies(obj);
 	std::cout << cookies << std::endl;
+
+
+	chrome.captureScreenshot("jpeg", 100, 0, 0, 0, 0, 1.0, "e:\\output.jpg");
 
 	while (true) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));

@@ -184,10 +184,12 @@ public:
 	void captureScreenshot(string format, int quality, int x, int y, int width, int height, float scale, string imgFullPath) {
 		string base64_str = this->page->captureScreenshot(format, quality, x, y, width, height, scale);
 		try {
-			// 解码Base64字符串
-			std::vector<unsigned char> decoded_data = stringUtils.base64_decode(base64_str);
-			// 将解码后的数据写入JPG文件
-			stringUtils.write_to_jpg_file(decoded_data, imgFullPath);
+			if (base64_str != "") {
+				// 解码Base64字符串
+				std::vector<unsigned char> decoded_data = stringUtils.base64_decode(base64_str);
+				// 将解码后的数据写入JPG文件
+				stringUtils.write_to_jpg_file(decoded_data, imgFullPath);
+			}
 		}
 		catch (const std::exception& e) {
 		}

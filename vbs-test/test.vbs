@@ -46,8 +46,10 @@ while finished=0
     finished = chrome.isLoadingFinished()
 wend
 
-ss = chrome.getCookies("[""https://www.bai111du.com""]")
-WScript.Echo ss
+'ss = chrome.getCookies("[""https://www.baidu.com""]")
+'WScript.Echo ss
+
+call chrome.captureScreenshot("jpeg", 100, 0, 0, 2094, 2094, 1.0, "output.jpg")
 
 WScript.Echo "8秒后自动关闭"
 WScript.Sleep 8000

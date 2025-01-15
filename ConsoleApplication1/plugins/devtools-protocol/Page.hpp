@@ -64,15 +64,26 @@ public:
 	/// <param name="height">,Rectangle height in device independent pixels (dip).</param>
 	/// <param name="scale">,Page scale factor.</param>
 	/// <returns>Base64-encoded image data. (Encoded as a base64 string when passed over JSON)</returns>
+
+	// È«ÆÁ½ØÍ¼²ÎÊý
+	//captureBeyondViewport:true
+	//format:"png"
+	//fromSurface:true
+	//quality:100
 	string captureScreenshot(string format, int quality, int x, int y, int width, int height, float scale) {
 		map<string, std::variant<int, string, bool, float, nlohmann::json>> params;
 		params["format"] = format;
 		params["quality"] = quality;
-		PageTypes::Clip clip(x, y, width, height, scale);
-		nlohmann::json j = nlohmann::json{ {"x", clip.x}, {"y", clip.y}, {"width", clip.width}, {"height", clip.height}, {"scale", clip.scale} };
-		params["clip"] = j;
-		nlohmann::json retJson = this->sendCommandAndWait("Page.captureScreenshot", params, 50000);
-		return retJson["data"];
+		if(width>0 && height>0){
+			PageTypes::Clip clip(x, y, width, height, scale);
+			nlohmann::json j = nlohmann::json{ {"x", clip.x}, {"y", clip.y}, {"width", clip.width}, {"height", clip.height}, {"scale", clip.scale} };
+			params["clip"] = j;
+		}
+		nlohmann::json retJson = this->sendCommandAndWait("Page.captureScreenshot", params, 10000);
+		if (retJson.contains("data")) {
+			return retJson["data"];
+		}
+		return "";
 	}
 	void handleJavaScriptDialog(bool accept, string promptText) {
 		map<string, std::variant<int, string, bool, float, nlohmann::json>> params;
