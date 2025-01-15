@@ -52,7 +52,10 @@ public:
 		map<string, std::variant<int, string, bool, float, nlohmann::json>> params;
 		params["urls"] = urls;
 		nlohmann::json retJson = this->sendCommandAndWait("Network.getCookies", params, 10000);
-		return retJson["cookies"];
+		if (retJson.count("cookies") > 0) {
+			return retJson["cookies"];
+		}
+		return {};
 	}
 
 	void setCookie(string name, string value, string url = "", string domain = "", string path = "", bool secure = false, bool httpOnly = false, string sameSite = "", int expires = -1) {

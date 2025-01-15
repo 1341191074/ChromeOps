@@ -6,6 +6,8 @@ dim ss
 '对象值必须使用SET关键字赋值
 set chrome = CreateObject("ChromeOps.soft")
 
+WScript.Echo "启动启动启动启动"
+
 '添加启动参数
 call chrome.pushArgs("--remote-debugging-port=9222")
 call chrome.pushArgs("--user-data-dir=E:\\test\\ud0")
@@ -13,8 +15,13 @@ call chrome.pushArgs("--user-data-dir=E:\\test\\ud0")
 'call cc.launch("C:\\Users\\Reach\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe")
 'call chrome.launch("C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe",false)
 'WScript.Sleep 200
+WScript.Echo "开始绑定"
 ss=chrome.chromeBind("localhost",9222)
+WScript.Echo "绑定成功"
+
+WScript.Echo "开始查询"
 ss=chrome.findTargetList()
+WScript.Echo "开始查询"
 dim ary
 ary=Split(ss,"====")
 ss=ary(0)
@@ -23,13 +30,13 @@ tab=Split(ss,"|||")
 WScript.Echo tab(0)
 ss=chrome.switchTab(tab(0))
 
-WScript.Sleep 1000
+
 call chrome.clearBrowserCache()
 call chrome.clearBrowserCookies()
-WScript.Sleep 1000
+
 
 call chrome.navigate("https://www.baidu.com", "")
-WScript.Sleep 1000
+
 dim finished 
 '//0=没有加载完成 1=加载完成
 finished = chrome.isLoadingFinished()
@@ -39,7 +46,7 @@ while finished=0
     finished = chrome.isLoadingFinished()
 wend
 
-ss = chrome.getCookies("[""https://www.baidu.com""]")
+ss = chrome.getCookies("[""https://www.bai111du.com""]")
 WScript.Echo ss
 
 WScript.Echo "8秒后自动关闭"
