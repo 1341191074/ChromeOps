@@ -93,7 +93,7 @@
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;_USRDLL;WIN32_LEAN_AND_MEAN;OPENSSL_STATIC;_CONSOLE;CURL_STATICLIB;_CRT_SECURE_NO_WARNINGS;BUILDING_LIBCURL;HTTP_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>E:\gitee\ChromeOps\ConsoleApplication1\plugins;D:\apps\websocketpp-0.8.2;D:\apps\boost_1_86_0;D:\apps\OpenSSL-Win64\include;D:\apps\curl-8.11.1\builds\libcurl-vc17-x64-debug-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../ConsoleApplication1/plugins;D:\apps\websocketpp-0.8.2;D:\apps\boost_1_86_0;D:\apps\OpenSSL-Win64\include;D:\apps\curl-8.11.1\builds\libcurl-vc17-x64-debug-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
