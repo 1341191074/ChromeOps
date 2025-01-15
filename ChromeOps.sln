@@ -10,8 +10,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChromeOpsPS", "ChromeOpsPS\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{18B1384A-A6B9-4C00-A175-319E141619CB}"
 	ProjectSection(SolutionItems) = preProject
-		readme.txt = readme.txt
 		vbs-test\test.vbs = vbs-test\test.vbs
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChromeOps", "ChromeOps\ChromeOps.vcxproj", "{F037ABE8-C476-40D8-8E09-EAE1959CB7D1}"
