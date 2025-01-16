@@ -48,6 +48,7 @@ interface IChromeOpsSoft : IDispatch
 	[id(16)] HRESULT clearBrowserCache();
 	[id(17)] HRESULT clearBrowserCookies();
 	[id(18)] HRESULT setCacheDisabled([in]int cacheDisabled);
+	[id(19)] HRESULT captureFullScreenshot([in]BSTR format, [in]int quality, [in]BSTR imgFullPath);
 };
 [
 	uuid(51fb357f-0e50-40b7-bcbe-290e42e2af6c),

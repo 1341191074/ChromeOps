@@ -67,6 +67,7 @@ public:
     STDMETHOD(clearBrowserCache)();
     STDMETHOD(clearBrowserCookies)();
     STDMETHOD(setCacheDisabled)(int cacheDisabled);
+    STDMETHOD(captureFullScreenshot)(BSTR format, int quality, BSTR imgFullPath);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ChromeOpsSoft), CChromeOpsSoft)

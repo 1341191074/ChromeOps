@@ -181,8 +181,23 @@ public:
 		return res;
 	}
 
+	void captureFullScreenshot(string format, int quality, string imgFullPath) {
+		string base64_str = this->page->captureFullScreenshot(format, quality);
+		try {
+			if (base64_str != "") {
+				// 解码Base64字符串
+				std::vector<unsigned char> decoded_data = stringUtils.base64_decode(base64_str);
+				// 将解码后的数据写入JPG文件
+				stringUtils.write_to_jpg_file(decoded_data, imgFullPath);
+			}
+		}
+		catch (const std::exception& e) {
+		}
+	}
+
 	void captureScreenshot(string format, int quality, int x, int y, int width, int height, float scale, string imgFullPath) {
-		string base64_str = this->page->captureScreenshot(format, quality, x, y, width, height, scale);
+		PageTypes::Clip clip(x, y, width, height, scale);
+		string base64_str = this->page->captureScreenshot(format, quality, &clip);
 		try {
 			if (base64_str != "") {
 				// 解码Base64字符串

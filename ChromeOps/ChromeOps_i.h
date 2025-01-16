@@ -384,6 +384,11 @@ EXTERN_C const IID IID_IChromeOpsSoft;
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE setCacheDisabled( 
             /* [in] */ int cacheDisabled) = 0;
         
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE captureFullScreenshot( 
+            /* [in] */ BSTR format,
+            /* [in] */ int quality,
+            /* [in] */ BSTR imgFullPath) = 0;
+        
     };
     
     
@@ -563,6 +568,13 @@ EXTERN_C const IID IID_IChromeOpsSoft;
             IChromeOpsSoft * This,
             /* [in] */ int cacheDisabled);
         
+        DECLSPEC_XFGVIRT(IChromeOpsSoft, captureFullScreenshot)
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *captureFullScreenshot )( 
+            IChromeOpsSoft * This,
+            /* [in] */ BSTR format,
+            /* [in] */ int quality,
+            /* [in] */ BSTR imgFullPath);
+        
         END_INTERFACE
     } IChromeOpsSoftVtbl;
 
@@ -652,6 +664,9 @@ EXTERN_C const IID IID_IChromeOpsSoft;
 
 #define IChromeOpsSoft_setCacheDisabled(This,cacheDisabled)	\
     ( (This)->lpVtbl -> setCacheDisabled(This,cacheDisabled) ) 
+
+#define IChromeOpsSoft_captureFullScreenshot(This,format,quality,imgFullPath)	\
+    ( (This)->lpVtbl -> captureFullScreenshot(This,format,quality,imgFullPath) ) 
 
 #endif /* COBJMACROS */
 

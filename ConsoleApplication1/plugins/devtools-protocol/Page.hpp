@@ -53,6 +53,13 @@ public:
 		}
 	}
 
+	string captureFullScreenshot(string format, int quality) {
+		return this->_captureScreenshot(format, quality, nullptr, true, true);
+	}
+	string captureScreenshot(string format, int quality, PageTypes::Clip* clip) {
+		return this->_captureScreenshot(format, quality, clip, true, true);
+	}
+
 	/// <summary>
 	/// 
 	/// </summary>
@@ -64,19 +71,14 @@ public:
 	/// <param name="height">,Rectangle height in device independent pixels (dip).</param>
 	/// <param name="scale">,Page scale factor.</param>
 	/// <returns>Base64-encoded image data. (Encoded as a base64 string when passed over JSON)</returns>
-
-	// È«ÆÁ½ØÍ¼²ÎÊý
-	//captureBeyondViewport:true
-	//format:"png"
-	//fromSurface:true
-	//quality:100
-	string captureScreenshot(string format, int quality, int x, int y, int width, int height, float scale) {
+	string _captureScreenshot(string format, int quality, PageTypes::Clip* clip, bool captureBeyondViewport = false, bool fromSurface = true) {
 		map<string, std::variant<int, string, bool, float, nlohmann::json>> params;
 		params["format"] = format;
 		params["quality"] = quality;
-		if(width>0 && height>0){
-			PageTypes::Clip clip(x, y, width, height, scale);
-			nlohmann::json j = nlohmann::json{ {"x", clip.x}, {"y", clip.y}, {"width", clip.width}, {"height", clip.height}, {"scale", clip.scale} };
+		params["captureBeyondViewport"] = captureBeyondViewport; // Defaults to false
+		params["fromSurface"] = fromSurface; //Defaults to true
+		if (clip != nullptr && clip->width > 0 && clip->height > 0) {
+			nlohmann::json j = nlohmann::json{ {"x", clip->x}, {"y", clip->y}, {"width", clip->width}, {"height", clip->height}, {"scale", clip->scale} };
 			params["clip"] = j;
 		}
 		nlohmann::json retJson = this->sendCommandAndWait("Page.captureScreenshot", params, 10000);

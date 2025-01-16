@@ -81,6 +81,11 @@ STDMETHODIMP CChromeOpsSoft::runScript(BSTR expression, BSTR* retVal)
 	return S_OK;
 }
 
+STDMETHODIMP CChromeOpsSoft::captureFullScreenshot(BSTR format, int quality, BSTR imgFullPath)
+{
+	this->chrome.captureFullScreenshot(this->stringUtils.BSTRToString(format), quality, this->stringUtils.BSTRToString(imgFullPath));
+	return S_OK;
+}
 
 STDMETHODIMP CChromeOpsSoft::captureScreenshot(BSTR format, int quality, int x, int y, int width, int height, float scale, BSTR imgFullPath)
 {
@@ -145,3 +150,6 @@ STDMETHODIMP CChromeOpsSoft::setCacheDisabled(int cacheDisabled)
 	this->chrome.setCacheDisabled(cacheDisabled);
 	return S_OK;
 }
+
+
+
