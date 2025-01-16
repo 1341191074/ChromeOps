@@ -1,4 +1,15 @@
 
+### 预处理器配置
+_WINDOWS
+_USRDLL
+WIN32_LEAN_AND_MEAN
+OPENSSL_STATIC
+_CONSOLE
+CURL_STATICLIB
+_CRT_SECURE_NO_WARNINGS
+BUILDING_LIBCURL
+HTTP_ONLY
+
 ### 配置nlohmann-json
 nlohmann-json 克隆到本地，配置附加目录即可
 ```shell
@@ -10,14 +21,17 @@ git clone https://github.com/nlohmann/json.git
 ### 编译并配置opensll
 windows平台下载 https://slproweb.com/products/Win32OpenSSL.html
 选择 Win64 OpenSSL v3.4.0 ， 不选择Light版本，Light版本不带lib和include
-解压后配置 D:\apps\OpenSSL-Win64\include 和 链接器 D:\apps\OpenSSL-Win64\lib\VC\x64\MT
 MTd: 多线程 静态库 Debug版本
 MT: 多线程 静态库 Release版本
+
+附加目录： D:\apps\OpenSSL-Win64\include 
+链接器 D:\apps\OpenSSL-Win64\lib\VC\x64\MT
 
 
 ### 编译并配置boost
 下载编译好的版本 https://sourceforge.net/projects/boost/files/boost-binaries/
-D:\apps\boost_1_86_0\lib64-msvc-14.3
+附加目录：D:\apps\boost_1_86_0
+链接器 : D:\apps\boost_1_86_0\lib64-msvc-14.3
 
 
 
@@ -91,4 +105,8 @@ Boost安装64位的
 还有就是别动态库中引用了一个静态库，然后该动态库又被exe引用了，这些都容易造成冲突
 
 ### 配置websocketpp
-下载并配置附加目录
+下载直接配置附加目录即可
+```
+git clone https://github.com/zaphoyd/websocketpp
+```
+附加目录配置：D:\apps\websocketpp-0.8.2

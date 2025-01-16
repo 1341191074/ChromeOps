@@ -197,10 +197,11 @@ public:
 
 	void inputText(string selector, string txt) {
 		string objectId = this->dom->resolveNode(selector);
-		this->runtime->callFunctionOn(objectId, "function(){this.focus()}", NULL);
+		this->runtime->callFunctionOn(objectId, "function(){this.focus();}", NULL);
 		//this->input->insertText(txt);
 		this->runtime->callFunctionOn(objectId, "function(){this.value='" + txt + "';var inputEvent = new Event('input');this.dispatchEvent(inputEvent);}", NULL);
 		this->runtime->releaseObject(objectId);
+		//this->page->bringToFront();
 	}
 
 	string getCookies(nlohmann::json urls) {

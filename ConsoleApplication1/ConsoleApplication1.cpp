@@ -29,7 +29,7 @@ int main()
 	chrome.pushArgs("--user-data-dir=E:\\test\\ud0");
 	//chrome.launch("C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe", false);
 	int ret = chrome.chromeBind("localhost", 9222);
-		string html = chrome.findTargetList();
+	string html = chrome.findTargetList();
 	std::vector<std::string> tokens;
 	stringUtils.split(html, '====', tokens);
 	string tab = tokens.at(0);
@@ -38,25 +38,29 @@ int main()
 	tab = tokens.at(0);
 	chrome.switchTab(tab);
 
-	//chrome.runScript("function mylog(){console.log(\"test\");}mylog();");
-	//chrome.runScript("var i;i=1;");
 
-
-
-	//string selector = "#kw";
-	//string text = "c++开发工具";
-	//text = stringUtils.GBKToUTF8(text);
-	//chrome.inputText(selector,text);
-
-	chrome.navigate("https://www.baidu.com", "");
+	//chrome.navigate("https://www.baidu.com", "");
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	boolean finished = chrome.isLoadingFinished();//0=没有加载完成 1=加载完成
-	nlohmann::json obj = nlohmann::json::parse("[\"https://www.baidu.com\"]");
-	string cookies = chrome.getCookies(obj);
-	std::cout << cookies << std::endl;
+	while (!finished) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(200));
+		finished = chrome.isLoadingFinished();
+	}
+	std::cout << "加载完成" << std::endl;
+	//nlohmann::json obj = nlohmann::json::parse("[\"https://www.baidu.com\"]");
+	//string cookies = chrome.getCookies(obj);
+	//std::cout << cookies << std::endl;
+	//chrome.captureScreenshot("jpeg", 100, 0, 0, 0, 0, 1.0, "e:\\output.jpg");
 
+	//string desc = chrome.runScript("var i;i=1;");
+	//std::cout << desc << std::endl;
 
-	chrome.captureScreenshot("jpeg", 100, 0, 0, 0, 0, 1.0, "e:\\output.jpg");
+	//chrome.runScript("function mylog(){console.log(\"test\");}mylog();");
+
+	string selector = "#kw";
+	string text = "c++加载完成";
+	text = stringUtils.GBKToUTF8(text);
+	chrome.inputText(selector,text);
 
 	while (true) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));

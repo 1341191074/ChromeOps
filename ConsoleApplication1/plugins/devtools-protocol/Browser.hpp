@@ -15,8 +15,10 @@ public:
 	std::string getVersion()
 	{
 		nlohmann::json retJson = this->sendCommandAndWait("Browser.close", {});
-		string ret = retJson["root"];
-		return ret;
+		if (retJson.contains("root")) {
+			return retJson["root"];
+		}
+		return "unknown";
 	}
 };
 
