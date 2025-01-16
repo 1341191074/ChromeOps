@@ -57,7 +57,7 @@ public:
 		return this->_captureScreenshot(format, quality, nullptr, true, true);
 	}
 	string captureScreenshot(string format, int quality, PageTypes::Clip* clip) {
-		return this->_captureScreenshot(format, quality, clip, true, true);
+		return this->_captureScreenshot(format, quality, clip);
 	}
 
 	/// <summary>
