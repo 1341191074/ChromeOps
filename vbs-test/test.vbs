@@ -34,8 +34,7 @@ ss=chrome.switchTab(tab(0))
 call chrome.clearBrowserCache()
 call chrome.clearBrowserCookies()
 
-
-call chrome.navigate("https://www.baidu.com", "")
+'call chrome.navigate("https://www.baidu.com", "")
 
 dim finished 
 '//0=没有加载完成 1=加载完成
@@ -49,7 +48,9 @@ wend
 'ss = chrome.getCookies("[""https://www.baidu.com""]")
 'WScript.Echo ss
 
-call chrome.captureScreenshot("jpeg", 100, 0, 0, 2094, 2094, 1.0, "output.jpg")
+'call chrome.captureScreenshot("jpeg", 100, 0, 0, 2094, 2094, 1.0, "output.jpg")
+call chrome.captureFullScreenshot("png", 100, "output1.png")
+call chrome.captureFullScreenshot("jpeg", 100, "output2.jpg")
 
 WScript.Echo "8秒后自动关闭"
 WScript.Sleep 8000
