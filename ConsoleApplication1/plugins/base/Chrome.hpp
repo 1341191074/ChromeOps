@@ -11,7 +11,6 @@
 #include "devtools-protocol/Input.hpp"
 #include "devtools-protocol/Network.hpp"
 
-namespace bp = boost::process;
 
 class Chrome
 {
@@ -26,7 +25,7 @@ private:
 	std::string host;
 	int port;
 	std::vector<std::string> args;
-	bp::child chrome_process;
+	PROCESS_INFORMATION pi;
 	int isBind; // -1=³õÊ¼×´Ì¬, 0=Ê§°Ü, 1=³É¹¦
 	int isPageBind; // -1=³õÊ¼×´Ì¬, 0=Ê§°Ü, 1=³É¹¦
 	std::string lastTab;
@@ -73,7 +72,7 @@ public:
 	void launch(std::string chromeFullPath, int tryBind)
 	{
 		this->chromeFullPath = chromeFullPath;
-		this->chrome_process = this->processUtils.startChrome(this->chromeFullPath, this->args);
+		pi = this->processUtils.startChrome(this->chromeFullPath, this->args);
 	}
 
 	int chromeBind(std::string host, int port)

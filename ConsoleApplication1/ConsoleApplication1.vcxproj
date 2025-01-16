@@ -110,14 +110,14 @@
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>.\plugins;D:\apps\websocketpp-0.8.2;D:\apps\OpenSSL-Win64\include;D:\apps\boost_1_86_0;D:\apps\curl-8.11.1\builds\libcurl-vc17-X64-debug-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\plugins;D:\apps\curl-8.11.1\builds\libcurl-vc17-X64-debug-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;D:\apps\OpenSSL-Win64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\apps\curl-8.11.1\builds\libcurl-vc17-x64-debug-static-ipv6-sspi-schannel\lib;D:\apps\boost_1_86_0\lib64-msvc-14.3;D:\apps\OpenSSL-Win64\lib\VC\x64\MTd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcrypto_static.lib;libssl_static.lib;crypt32.lib;libcurl_a_debug.lib;ws2_32.lib;winmm.lib;wldap32.lib;normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\apps\OpenSSL-Win64\lib\VC\x64\MTd;D:\apps\curl-8.11.1\builds\libcurl-vc17-x64-debug-static-ipv6-sspi-schannel\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>crypt32.lib;libcurl_a_debug.lib;wldap32.lib;ws2_32.lib;libcrypto_static.lib;libssl_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

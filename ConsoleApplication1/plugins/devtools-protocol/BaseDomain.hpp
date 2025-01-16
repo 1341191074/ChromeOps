@@ -2,6 +2,7 @@
 #include <variant>
 #include <map>
 #include <sstream>
+#include <thread>
 #include "nlohmann/json.hpp"
 #include "base/AsyncDriver.hpp"
 #include "utils/GlobalData.hpp"
