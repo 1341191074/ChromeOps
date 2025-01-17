@@ -50,9 +50,9 @@ https://curl.se/download/curl-7.88.1.tar.gz
 3°¢±‡“Î
 windowsœ¬±‡“Î(MT):
 
-32-debug: nmake /f Makefile.vc mode=static vc=17 debug=yes rtlibcfg=static machine=x32 ENABLE_IDN=no
+32-debug: nmake /f Makefile.vc mode=static vc=17 debug=yes rtlibcfg=static machine=x86 ENABLE_IDN=no
 
-32-release: nmake /f Makefile.vc mode=static vc=17 debug=no rtlibcfg=static machine=x32 ENABLE_IDN=no
+32-release: nmake /f Makefile.vc mode=static vc=17 debug=no rtlibcfg=static machine=x86 ENABLE_IDN=no
 
 64-debug: nmake /f Makefile.vc mode=static vc=17 debug=yes rtlibcfg=static machine=X64 ENABLE_IDN=no
 
