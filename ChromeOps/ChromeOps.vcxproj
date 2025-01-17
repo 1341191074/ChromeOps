@@ -90,7 +90,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;_DEBUG;_USRDLL;_CONSOLE;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;_DEBUG;_USRDLL;_CONSOLE;CURL_STATICLIB;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../ConsoleApplication1/plugins;D:\apps\OpenSSL-Win64\include;D:\apps\curl-8.11.1\builds\libcurl-vc17-x64-debug-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -197,7 +197,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;_USRDLL;_CONSOLE;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;_USRDLL;_CONSOLE;CURL_STATICLIB;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../ConsoleApplication1/plugins;D:\apps\OpenSSL-Win64\include;D:\apps\curl-8.11.1\builds\libcurl-vc17-X64-release-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
