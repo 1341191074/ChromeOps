@@ -25,6 +25,8 @@ int main()
 {
 	//SetConsoleOutputCP(CP_UTF8);
 
+	curl_global_init(CURL_GLOBAL_ALL);//全局只执行\1次
+
 	StringUtils stringUtils;
 	Chrome chrome;
 	chrome.pushArgs("--remote-debugging-port=9222");
@@ -54,7 +56,7 @@ int main()
 	//std::cout << cookies << std::endl;
 
 	//chrome.captureScreenshot("png", 100, 0, 0, 800, 600, 1.0, "e:\\output1.png");
-	//chrome.captureFullScreenshot("png", 100, "e:\\output2.png");
+	chrome.captureFullScreenshot("png", 100, "e:\\output2.png");
 
 	//string desc = chrome.runScript("var i;i=1;");
 	//std::cout << desc << std::endl;

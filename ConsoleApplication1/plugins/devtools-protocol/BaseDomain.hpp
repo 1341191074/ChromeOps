@@ -63,6 +63,7 @@ private:
 		auto end = start + std::chrono::milliseconds(timeout);
 		nlohmann::json ret = this->getResult(cmdIdx);
 		while (ret == NULL) {//初始状态下，等待绑定成功或者失败
+			//std::cout << ret << std::endl;
 			auto now = std::chrono::system_clock::now();
 			if (now >= end) {
 				// 超时了，返回空字符串或特定的错误消息

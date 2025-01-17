@@ -12,7 +12,9 @@ public:
 		this->driver = mdriver;
 		this->sendCommandNoWait("DOM.enable", {});
 		nlohmann::json root = this->getDocument(0);
-		this->rootId = root["nodeId"];
+		if (root.contains("nodeId")) {
+			this->rootId = root["nodeId"];
+		}
 	}
 
 	int querySelector(string selector)
