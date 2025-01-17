@@ -31,7 +31,7 @@ int main()
 	Chrome chrome;
 	chrome.pushArgs("--remote-debugging-port=9222");
 	chrome.pushArgs("--user-data-dir=E:\\test\\ud0");
-	//chrome.launch("C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe", false);
+	chrome.launch("C:\\Users\\Reach\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe", true);
 	int ret = chrome.chromeBind("localhost", 9222);
 	string html = chrome.findTargetList();
 	std::vector<std::string> tokens;
