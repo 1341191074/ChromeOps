@@ -150,6 +150,3 @@ STDMETHODIMP CChromeOpsSoft::setCacheDisabled(int cacheDisabled)
 	this->chrome.setCacheDisabled(cacheDisabled);
 	return S_OK;
 }
-
-
-

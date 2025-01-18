@@ -21,7 +21,6 @@ WScript.Echo "绑定成功"
 
 WScript.Echo "开始查询"
 ss=chrome.findTargetList()
-WScript.Echo "开始查询"
 dim ary
 ary=Split(ss,"====")
 ss=ary(0)
@@ -32,7 +31,7 @@ ss=chrome.switchTab(tab(0))
 
 
 call chrome.clearBrowserCache()
-call chrome.clearBrowserCookies()
+'call chrome.clearBrowserCookies()
 
 call chrome.navigate("https://www.baidu.com", "")
 

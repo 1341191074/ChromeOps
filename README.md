@@ -28,15 +28,7 @@ MT: 多线程 静态库 Release版本
 链接器 D:\apps\OpenSSL-Win64\lib\VC\x64\MT
 
 
-### 编译并配置boost
-下载编译好的版本 https://sourceforge.net/projects/boost/files/boost-binaries/
-附加目录：D:\apps\boost_1_86_0
-链接器 : D:\apps\boost_1_86_0\lib64-msvc-14.3
-
-
-
 ### 编译并配置libcurl
-
 https://www.cnblogs.com/ligang0357/p/17188394.html
 
 
@@ -48,10 +40,18 @@ https://curl.se/download/curl-7.88.1.tar.gz
 2、解压执行curl目录下的buildconf.bat，然后cd winbuild
 
 3、编译
+
+vs的工具下的命令行:(一定、一定、一定)
+D:\apps\Microsoft\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build
+32位：vcvarsall.bat x86
+64位:vcvarsall.bat x64
+
+下一步：执行curl目录下的buildconf.bat，然后cd winbuild
+
 windows下编译(MT):
 
 32-debug: nmake /f Makefile.vc mode=static vc=17 debug=yes rtlibcfg=static machine=x86 ENABLE_IDN=no
-
+          
 32-release: nmake /f Makefile.vc mode=static vc=17 debug=no rtlibcfg=static machine=x86 ENABLE_IDN=no
 
 64-debug: nmake /f Makefile.vc mode=static vc=17 debug=yes rtlibcfg=static machine=X64 ENABLE_IDN=no
@@ -71,18 +71,6 @@ windows下编译(MD):
 重点是一定要加ENABLE_IDN=no，默认是打开的，不加的话编译会出错
 
 X64不行就换AMD64
-
-Boost安装64位的
-
-1.  从boost官网（www.boost.org）下载boost库，已经更新到1.62.0，下载boost_1_62_0.zip并解压到指定的路径（我选择的路径是E:oost）。
-
-2.  从开始->所有程序->Microsoft Visual Studio 2010，打开Visual Studio Tools的Visual Studio x64 Win64命令提示。
-
-3.  切换到解压路径E:oostoost_1_62_0下，运行bootstrap.bat，建立编译工具bjam.exe,b2.exe。
-
-4. b2 --toolset=msvc-10.0 --build-type=complete link=static address-model=64 threading=multi variant=release
-1. 
-注意vs release版本就写 debug=no，vs mt 编译需要加 rtlibcfg=static 参数
 
 4、vs 设置包含库和目录
 
@@ -104,9 +92,15 @@ Boost安装64位的
 
 还有就是别动态库中引用了一个静态库，然后该动态库又被exe引用了，这些都容易造成冲突
 
-### 配置websocketpp
+### 配置websocketpp。已弃用websocketpp
 下载直接配置附加目录即可
 ```
 git clone https://github.com/zaphoyd/websocketpp
 ```
 附加目录配置：D:\apps\websocketpp-0.8.2
+
+
+### 编译并配置boost。 已弃用boost
+下载编译好的版本 https://sourceforge.net/projects/boost/files/boost-binaries/
+附加目录：D:\apps\boost_1_86_0
+链接器 : D:\apps\boost_1_86_0\lib64-msvc-14.3
