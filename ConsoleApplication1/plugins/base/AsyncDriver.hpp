@@ -1,145 +1,130 @@
 #pragma once
-#include <websocketpp/config/asio_client.hpp>
-#include <websocketpp/client.hpp>
 #include <iostream>
 #include <string>
 #include <functional>
+#include <mutex>
 #include "nlohmann/json.hpp"
 #include "utils/GlobalData.hpp"
 
-typedef websocketpp::client<websocketpp::config::asio_client> client;
-
-using websocketpp::lib::placeholders::_1;
-using websocketpp::lib::placeholders::_2;
 using std::string;
 
 class AsyncDriver {
 private:
-	client m_endpoint;
-	std::weak_ptr<websocketpp::connection<websocketpp::config::asio_client>> m_hdl;
-	std::mutex m_mutex;
+	CURL* curl;
 	std::thread m_thread;
-	std::function<void(bool success)> m_on_connect_complete;
+	std::mutex m_mutex;
+	bool runing = false;
 
+	std::function<void(bool success)> m_on_connect_complete;
 	std::vector<std::function<void(string, nlohmann::json)>> callbacks;
 public:
 	string msg;
 public:
 	AsyncDriver() {
-		// Initialize ASIO
-		m_endpoint.init_asio();
-		m_endpoint.set_access_channels(websocketpp::log::alevel::none);
-		m_endpoint.clear_access_channels(websocketpp::log::alevel::none);
-		// Register handlers
-		m_endpoint.set_open_handler(bind(&AsyncDriver::on_open, this, ::_1));
-		m_endpoint.set_close_handler(bind(&AsyncDriver::on_close, this, ::_1));
-		m_endpoint.set_fail_handler(bind(&AsyncDriver::on_fail, this, ::_1));
-		m_endpoint.set_message_handler(bind(&AsyncDriver::on_message, this, ::_1, ::_2));
+		curl = curl_easy_init();
+		curl_easy_setopt(curl, CURLOPT_CONNECT_ONLY, 2L); /* websocket style */
 	}
 
 	~AsyncDriver() {
-		// Stop the ASIO io_service run loop
-		//m_endpoint.stop_perpetual(); //类似暂停
-		m_endpoint.stop(); //永久停止
-		if (m_thread.joinable()) {
-			m_thread.join();
-		}
+		curl_easy_cleanup(curl);
 	}
 
 	void registerCallback(std::function<void(string, nlohmann::json)> cb) {
 		callbacks.push_back(cb);
 	}
 
-	//private
-	void on_open(websocketpp::connection_hdl hdl) {
-		std::lock_guard<std::mutex> lock(m_mutex);
-		m_hdl = std::weak_ptr<websocketpp::connection<websocketpp::config::asio_client>>(
-			m_endpoint.get_con_from_hdl(hdl)
-		);
-		// Notify the caller that the connection was successful
-		if (m_on_connect_complete) {
-			m_on_connect_complete(true);
-			m_on_connect_complete = nullptr; // Reset the callback after use
-		}
-	}
+	void wsRecv() {
+		this->runing = true;
+		while (runing) {
+			size_t rlen;
+			const struct curl_ws_frame* meta;
+			char buffer[2048]; //每次接收1k的数据。
 
-	void on_close(websocketpp::connection_hdl hdl) {
-		std::lock_guard<std::mutex> lock(m_mutex);
-		m_hdl.reset(); // Reset the connection handle
-	}
+			CURLcode result = curl_ws_recv(curl, buffer, sizeof(buffer), &rlen, &meta);
+			if (result == CURLE_OK) {
+				std::vector<char> vec;
+				try {
+					size_t total_size = 0;
 
-	void on_fail(websocketpp::connection_hdl hdl) {
-		std::lock_guard<std::mutex> lock(m_mutex);
-		m_hdl.reset(); // Reset the connection handle
+					total_size = rlen;
+					if (meta->bytesleft > 0) {
+						total_size = rlen + meta->bytesleft;
+					}
 
-		// Notify the caller that the connection failed (if a callback was set)
-		if (m_on_connect_complete) {
-			m_on_connect_complete(false);
-			m_on_connect_complete = nullptr; // Reset the callback after use
-		}
-	}
+					vec.resize(total_size);
 
-	void on_message(websocketpp::connection_hdl hdl, client::message_ptr msg) {
-		std::lock_guard<std::mutex> lock(m_mutex);
-		nlohmann::json obj = nlohmann::json::parse(msg->get_payload());
-		//std::cout << obj << std::endl;
-		if (obj.contains("method")) { // Events
-			for (const auto& callback : callbacks) {
-				string method = obj["method"];
-				callback(method, obj["params"]);
+					// 首次初始化
+					for (int i = 0; i < rlen; i++) {
+						vec[i] = buffer[i];
+					}
+
+					while (meta->bytesleft > 0) {//循环获取
+						result = curl_ws_recv(curl, buffer, sizeof(buffer), &rlen, &meta);
+						for (int i = 0, j = meta->offset; i < rlen; i++, j++) {
+							vec[j] = buffer[i];
+						}
+					}
+
+
+					string str(vec.data(), vec.size());
+					//std::cout << "str=" << str << std::endl;
+					nlohmann::json obj = nlohmann::json::parse(str);
+					if (obj.contains("method")) { // Events
+						for (const auto& callback : callbacks) {
+							string method = obj["method"];
+							callback(method, obj["params"]);
+						}
+					}
+					else if (obj.contains("result") && obj.at("result").is_object()) {
+						GlobalData::getResult()[obj["id"]] = obj["result"];
+					}
+					else {
+						// nothing
+					}
+				}
+				catch (std::exception& ex) {
+					//string str(vec.data(), vec.size());
+				}
+
 			}
-		}
-		else if (obj.contains("result") && obj.at("result").is_object()) {
-			GlobalData::getResult()[obj["id"]] = obj["result"];
-		}
-		else {
-			// nothing
 		}
 	}
 
 	// public
 	void connect(const std::string& uri, std::function<void(bool success)> on_connect_complete) {
-		websocketpp::lib::error_code ec;
-		client::connection_ptr con = m_endpoint.get_connection(uri, ec);
+		if (!this->runing) { //未连接
+			curl_easy_setopt(curl, CURLOPT_URL, uri.c_str());
 
-		if (ec) {
-			std::cout << "Could not create connection because: " << ec.message() << std::endl;
-			on_connect_complete(false);
-			return;
-		}
+			CURLcode res = curl_easy_perform(curl);
+			if (res == CURLE_OK) {
+				on_connect_complete(true); // call callback
 
-		// Store the on_connect_complete callback for later use
-		m_on_connect_complete = on_connect_complete;
-
-		m_endpoint.connect(con);
-
-		//m_endpoint.run();
-		// Start the ASIO io_service run loop in a separate thread
-		if (!m_thread.joinable()) {
-			m_thread = std::thread(&client::run, &m_endpoint);
+				//连接成功后，启动消息接收线程
+				if (!m_thread.joinable()) {
+					m_thread = std::thread(&AsyncDriver::wsRecv, this);
+				}
+			}
 		}
 	}
 
 	void send_message(const std::string& message) {
-		// Ensure we have a valid connection handle
-		if (!m_hdl.lock()) {
-			std::cout << "No valid connection handle" << std::endl;
-			return;
-		}
-
-		//m_on_message_complete = on_message_complete;
-
-		websocketpp::lib::error_code ec;
-		m_endpoint.send(m_hdl.lock(), message, websocketpp::frame::opcode::text, ec);
-
-		if (ec) {
-			std::cout << "Send failed because: " << ec.message() << std::endl;
-		}
+		std::lock_guard<std::mutex> lock(m_mutex);
+		size_t sent;
+		CURLcode result = curl_ws_send(curl, message.c_str(), strlen(message.c_str()), &sent, 0, CURLWS_TEXT);
 	}
 
 	void stop() {
-		//m_endpoint.stop_perpetual();
-		m_endpoint.stop();
+		std::lock_guard<std::mutex> lock(m_mutex);
+		if (this->runing) {
+			//停止标志
+			this->runing = false;
+			//等待线程结束
+			m_thread.join();
+
+			//断开连接
+			size_t sent;
+			(void)curl_ws_send(curl, "", 0, &sent, 0, CURLWS_CLOSE);
+		}
 	}
 };
 
