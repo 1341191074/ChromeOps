@@ -4,6 +4,8 @@
 #include <thread>
 #include "base/Chrome.hpp"
 #include "utils/StringUtils.h"
+#include "nlohmann/json.hpp" 
+#include "utils/JsonUtils.hpp"
 
 using std::string;
 using std::variant;
@@ -21,7 +23,7 @@ static void mylog(variant<int, string> var) {
 	}
 }
 
-int main()
+int main1()
 {
 	//SetConsoleOutputCP(CP_UTF8);
 
@@ -74,3 +76,47 @@ int main()
 
 }
 
+int main() {
+
+	// 示例JSON字符串，包含数组
+	string jsonString = R"({
+        "obj": {
+            "domain": {
+                "x1": "value1",
+                "x2": "value2",
+                "list": [
+                    {"item1": "valueA"},
+                    {"item1": "valueB"}
+                ]
+            }
+        }
+    })";
+
+	// 解析JSON字符串
+	nlohmann::json j = nlohmann::json::parse(jsonString);
+
+	// 要获取的键路径，包含数组索引
+	//string keyPath = "obj.domain.list[2].item1";
+	string keyPath = "obj.x1";
+
+	JsonUtils jsonUtil;
+
+	// 获取值
+	nlohmann::json value = jsonUtil.getValueFromJson(j, keyPath);
+
+	// 输出值
+	if (value.is_string()) {
+		std::cout << "The value of " << keyPath << " is: " << value.get<string>() << std::endl;
+	}
+	else {
+		if (value.is_null()) {
+			std::cout << "The value of " << keyPath << " is NULL ." << value << std::endl;
+		}
+		else {
+			std::cout << "The value of " << keyPath << " is not a string." << value << std::endl;
+		}
+
+	}
+
+	return 0;
+}

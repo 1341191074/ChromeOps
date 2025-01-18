@@ -164,6 +164,7 @@
     <ClInclude Include="plugins\devtools-protocol\Target.hpp" />
     <ClInclude Include="plugins\utils\GlobalData.hpp" />
     <ClInclude Include="plugins\utils\HttpUtils.hpp" />
+    <ClInclude Include="plugins\utils\JsonUtils.hpp" />
     <ClInclude Include="plugins\utils\ProcessUtils.hpp" />
     <ClInclude Include="plugins\utils\StringUtils.h" />
   </ItemGroup>
