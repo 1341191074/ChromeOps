@@ -389,6 +389,15 @@ EXTERN_C const IID IID_IChromeOpsSoft;
             /* [in] */ int quality,
             /* [in] */ BSTR imgFullPath) = 0;
         
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE parseJson( 
+            /* [in] */ BSTR jsonBStr,
+            /* [retval][out] */ BSTR *retVal) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE getJsonValue( 
+            /* [in] */ BSTR uuidStr,
+            /* [in] */ BSTR keyPath,
+            /* [retval][out] */ BSTR *retVal) = 0;
+        
     };
     
     
@@ -575,6 +584,19 @@ EXTERN_C const IID IID_IChromeOpsSoft;
             /* [in] */ int quality,
             /* [in] */ BSTR imgFullPath);
         
+        DECLSPEC_XFGVIRT(IChromeOpsSoft, parseJson)
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *parseJson )( 
+            IChromeOpsSoft * This,
+            /* [in] */ BSTR jsonBStr,
+            /* [retval][out] */ BSTR *retVal);
+        
+        DECLSPEC_XFGVIRT(IChromeOpsSoft, getJsonValue)
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *getJsonValue )( 
+            IChromeOpsSoft * This,
+            /* [in] */ BSTR uuidStr,
+            /* [in] */ BSTR keyPath,
+            /* [retval][out] */ BSTR *retVal);
+        
         END_INTERFACE
     } IChromeOpsSoftVtbl;
 
@@ -667,6 +689,12 @@ EXTERN_C const IID IID_IChromeOpsSoft;
 
 #define IChromeOpsSoft_captureFullScreenshot(This,format,quality,imgFullPath)	\
     ( (This)->lpVtbl -> captureFullScreenshot(This,format,quality,imgFullPath) ) 
+
+#define IChromeOpsSoft_parseJson(This,jsonBStr,retVal)	\
+    ( (This)->lpVtbl -> parseJson(This,jsonBStr,retVal) ) 
+
+#define IChromeOpsSoft_getJsonValue(This,uuidStr,keyPath,retVal)	\
+    ( (This)->lpVtbl -> getJsonValue(This,uuidStr,keyPath,retVal) ) 
 
 #endif /* COBJMACROS */
 

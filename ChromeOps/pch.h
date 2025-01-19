@@ -8,6 +8,8 @@
 #define PCH_H
 
 // 添加要在此处预编译的标头
+// 预编译boost相关头文件，boost可能与某个库有冲突，因此首个编译
+#include <boost/process.hpp>
 #include "framework.h"
 
 #endif //PCH_H

@@ -129,9 +129,12 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_WINDOWS;_USRDLL;CURL_STATICLIB;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../ConsoleApplication1/plugins;D:\apps\cplus\OpenSSL-Win32\include;D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-x86-debug-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;D:\apps\cplus\boost_1_86_0_x86;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -153,8 +156,9 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <ModuleDefinitionFile>.\ChromeOps.def</ModuleDefinitionFile>
-      <AdditionalDependencies>comsvcs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comsvcs.lib;crypt32.lib;libcurl_a_debug.lib;wldap32.lib;ws2_32.lib;libcrypto_static.lib;libssl_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RegisterOutput>true</RegisterOutput>
+      <AdditionalLibraryDirectories>D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-x86-debug-static-ipv6-sspi-schannel\lib;D:\apps\cplus\OpenSSL-Win32\lib\VC\x86\MTd;D:\apps\cplus\boost_1_86_0_x86\lib32-msvc-14.3;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -165,7 +169,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;_CONSOLE;CURL_STATICLIB;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../ConsoleApplication1/plugins;D:\apps\cplus\OpenSSL-Win32\include;D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-x86-release-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\apps\cplus\boost_1_86_0_x86;../ConsoleApplication1/plugins;D:\apps\cplus\OpenSSL-Win32\include;D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-x86-release-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -193,7 +197,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalLibraryDirectories>D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-x86-release-static-ipv6-sspi-schannel\lib;D:\apps\cplus\OpenSSL-Win32\lib\VC\x86\MT;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-x86-release-static-ipv6-sspi-schannel\lib;D:\apps\cplus\boost_1_86_0_x86\lib32-msvc-14.3;D:\apps\cplus\OpenSSL-Win32\lib\VC\x86\MT;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
