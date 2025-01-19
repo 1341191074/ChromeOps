@@ -2,6 +2,7 @@
 #include <vector>
 #include "base/Chrome.hpp"
 #include "utils/StringUtils.h"
+#include "utils/JsonUtils.hpp"
 
 using std::string;
 using std::variant;
@@ -23,29 +24,32 @@ int main()
 {
 	//SetConsoleOutputCP(CP_UTF8);
 
-	StringUtils stringUtils;
-	Chrome chrome;
-	chrome.pushArgs("--remote-debugging-port=9222");
-	chrome.pushArgs("--user-data-dir=E:\\test\\ud0");
-	//chrome.launch("C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe", false);
-	int ret = chrome.chromeBind("localhost", 9222);
-	string html = chrome.findTargetList();
-	std::vector<std::string> tokens;
-	stringUtils.split(html, '====', tokens);
-	string tab = tokens.at(0);
-	stringUtils.split(tab, '|||', tokens);
-	mylog(tab); // 输出log
-	tab = tokens.at(0);
-	chrome.switchTab(tab);
+	JsonUtils jsonUtils;
+	jsonUtils.parseJson();
 
-	chrome.navigate("https://www.baidu.com", "");
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	boolean finished = chrome.isLoadingFinished();//0=没有加载完成 1=加载完成
-	while (!finished) {
-		std::this_thread::sleep_for(std::chrono::milliseconds(200));
-		finished = chrome.isLoadingFinished();
-	}
-	std::cout << "加载完成" << std::endl;
+	//StringUtils stringUtils;
+	//Chrome chrome;
+	//chrome.pushArgs("--remote-debugging-port=9222");
+	//chrome.pushArgs("--user-data-dir=E:\\test\\ud0");
+	////chrome.launch("C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe", false);
+	//int ret = chrome.chromeBind("localhost", 9222);
+	//string html = chrome.findTargetList();
+	//std::vector<std::string> tokens;
+	//stringUtils.split(html, '====', tokens);
+	//string tab = tokens.at(0);
+	//stringUtils.split(tab, '|||', tokens);
+	//mylog(tab); // 输出log
+	//tab = tokens.at(0);
+	//chrome.switchTab(tab);
+
+	//chrome.navigate("https://www.baidu.com", "");
+	//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	//boolean finished = chrome.isLoadingFinished();//0=没有加载完成 1=加载完成
+	//while (!finished) {
+	//	std::this_thread::sleep_for(std::chrono::milliseconds(200));
+	//	finished = chrome.isLoadingFinished();
+	//}
+	//std::cout << "加载完成" << std::endl;
 
 	//nlohmann::json obj = nlohmann::json::parse("[\"https://www.baidu.com\"]");
 	//string cookies = chrome.getCookies(obj);
@@ -64,9 +68,9 @@ int main()
 	//text = stringUtils.GBKToUTF8(text);
 	//chrome.inputText(selector,text);
 
-	while (true) {
+	/*while (true) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	}
+	}*/
 
 }
 

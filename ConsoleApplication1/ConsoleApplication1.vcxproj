@@ -128,7 +128,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;_USRDLL;WIN32_LEAN_AND_MEAN;OPENSSL_STATIC;_CONSOLE;CURL_STATICLIB;_CRT_SECURE_NO_WARNINGS;BUILDING_LIBCURL;HTTP_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../ConsoleApplication1/plugins;D:\apps\websocketpp-0.8.2;D:\apps\boost_1_86_0;D:\apps\OpenSSL-Win64\include;D:\apps\curl-8.11.1\builds\libcurl-vc17-X64-release-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../ConsoleApplication1/plugins;D:\apps\cplus\websocketpp-0.8.2;D:\apps\cplus\boost_1_86_0_x64;D:\apps\cplus\OpenSSL-Win64\include;D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-X64-release-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -137,7 +137,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\apps\curl-8.11.1\builds\libcurl-vc17-X64-release-static-ipv6-sspi-schannel\lib;D:\apps\boost_1_86_0\lib64-msvc-14.3;D:\apps\OpenSSL-Win64\lib\VC\x64\MT;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-X64-release-static-ipv6-sspi-schannel\lib;D:\apps\cplus\boost_1_86_0_x64\lib64-msvc-14.3;D:\apps\cplus\OpenSSL-Win64\lib\VC\x64\MT;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>crypt32.lib;libcrypto_static.lib;libssl_static.lib;libcurl_a.lib;ws2_32.lib;winmm.lib;wldap32.lib;normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/NODEFAULTLIB:LIBCMTD.lib,libcpmtd.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -159,6 +159,7 @@
     <ClInclude Include="plugins\devtools-protocol\Target.hpp" />
     <ClInclude Include="plugins\utils\GlobalData.hpp" />
     <ClInclude Include="plugins\utils\HttpUtils.hpp" />
+    <ClInclude Include="plugins\utils\JsonUtils.hpp" />
     <ClInclude Include="plugins\utils\ProcessUtils.hpp" />
     <ClInclude Include="plugins\utils\StringUtils.h" />
   </ItemGroup>
