@@ -1,15 +1,35 @@
 #pragma once
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_io.hpp>
 #include "nlohmann/json.hpp" 
+#include <atlstr.h>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
 
+namespace uuids = boost::uuids;
 using json = nlohmann::json;
 using namespace std;
 class JsonUtils
 {
 public:
+
+    /// <summary>
+    /// 解析json，并放入vec
+    /// </summary>
+    /// <param name="jsonStr">json字符串</param>
+    /// <param name="vec">json容器</param>
+    void parseJson(CString jsonStr, map<string, json>* jsonCache) {
+        uuids::random_generator uuid_gen;
+        uuids::uuid uuid1 = uuid_gen();
+        uuids::uuid uuid2 = uuid_gen();
+
+        std::cout << "UUID 1: " << uuid1 << std::endl;
+        std::cout << "UUID 2: " << uuid2 << std::endl;
+    }
+
     // 辅助函数：将点分隔的字符串转换为键的向量，支持数组索引
     vector<string> splitKeys(const string& keyPath) {
         vector<string> keys;

@@ -24,6 +24,7 @@ private:
     StringUtils stringUtils;
     Chrome chrome;
 
+    std::map<string, nlohmann::json> jsonCache;
 public:
     CChromeOpsSoft()
     {
@@ -50,7 +51,7 @@ public:
 public:
     // 测试方法
     STDMETHOD(ping)(BSTR str, BSTR* ret);
-    STDMETHOD(chromeBind)(BSTR host, int port, int* retVal = false);
+    STDMETHOD(chromeBind)(BSTR host, int port, int* retVal);
     STDMETHOD(pushArgs)(BSTR arg);
     STDMETHOD(launch)(BSTR chromeFullPath, int tryBind, int* retVal);
     STDMETHOD(findTargetList)(BSTR* targetList);
@@ -68,6 +69,7 @@ public:
     STDMETHOD(clearBrowserCookies)();
     STDMETHOD(setCacheDisabled)(int cacheDisabled);
     STDMETHOD(captureFullScreenshot)(BSTR format, int quality, BSTR imgFullPath);
+    STDMETHOD(parseJson)(BSTR jsonBStr, BSTR* retVal);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ChromeOpsSoft), CChromeOpsSoft)

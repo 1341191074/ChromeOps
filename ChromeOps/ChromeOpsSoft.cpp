@@ -150,3 +150,10 @@ STDMETHODIMP CChromeOpsSoft::setCacheDisabled(int cacheDisabled)
 	this->chrome.setCacheDisabled(cacheDisabled);
 	return S_OK;
 }
+
+STDMETHODIMP CChromeOpsSoft::parseJson(BSTR jsonBStr, BSTR* retVal)
+{
+	
+
+	return S_OK;
+}
