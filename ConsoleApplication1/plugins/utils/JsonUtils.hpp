@@ -26,8 +26,8 @@ public:
         uuids::uuid uuid1 = uuid_gen();
         uuids::uuid uuid2 = uuid_gen();
 
-        std::cout << "UUID 1: " << uuid1 << std::endl;
-        std::cout << "UUID 2: " << uuid2 << std::endl;
+        std::cout << "UUID 1: " << uuids::to_string(uuid1) << std::endl;
+        std::cout << "UUID 2: " << uuids::to_string(uuid1) << std::endl;
     }
 
     // 辅助函数：将点分隔的字符串转换为键的向量，支持数组索引
