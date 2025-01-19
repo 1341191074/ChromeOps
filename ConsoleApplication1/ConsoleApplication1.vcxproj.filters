@@ -50,7 +50,7 @@
     <ClInclude Include="plugins\utils\ProcessUtils.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="plugins\utils\StringUtils.h">
+    <ClInclude Include="plugins\utils\StringUtils.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="plugins\devtools-protocol\Input.hpp">

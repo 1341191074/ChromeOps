@@ -1,9 +1,7 @@
 ﻿// ChromeOpsSoft.cpp: CChromeOpsSoft 的实现
-
 #include "pch.h"
 #include <string>
 #include "ChromeOpsSoft.h"
-#include "nlohmann/json.hpp"
 
 // CChromeOpsSoft
 STDMETHODIMP CChromeOpsSoft::ping(BSTR str, BSTR* retVal)
@@ -16,18 +14,15 @@ STDMETHODIMP CChromeOpsSoft::ping(BSTR str, BSTR* retVal)
 
 STDMETHODIMP CChromeOpsSoft::chromeBind(BSTR host, int port, int* retVal)
 {
-	this->chrome.chromeBind(this->stringUtils.BSTRToString(host), port);
-	*retVal = 1;// 0=失败，1=成功
+	*retVal = this->chrome.chromeBind(this->stringUtils.BSTRToString(host), port);// 0=失败，1=成功
 	return S_OK;
 }
-
 
 STDMETHODIMP CChromeOpsSoft::pushArgs(BSTR arg)
 {
 	this->chrome.pushArgs(this->stringUtils.BSTRToString(arg));
 	return S_OK;
 }
-
 
 STDMETHODIMP CChromeOpsSoft::launch(BSTR chromeFullPath, int tryBind, int* retVal)
 {
@@ -36,11 +31,9 @@ STDMETHODIMP CChromeOpsSoft::launch(BSTR chromeFullPath, int tryBind, int* retVa
 	return S_OK;
 }
 
-
 STDMETHODIMP CChromeOpsSoft::findTargetList(BSTR* targetList)
 {
 	std::string ret = this->chrome.findTargetList();
-	//std::string ret = this->chrome.target->getTargets();
 	*targetList = this->stringUtils.stringToBSTR(ret);
 	return S_OK;
 }
@@ -51,7 +44,6 @@ STDMETHODIMP CChromeOpsSoft::switchTab(BSTR tabId, int* retVal)
 	return S_OK;
 }
 
-
 STDMETHODIMP CChromeOpsSoft::getOuterHTML(BSTR selector, BSTR* retVal)
 {
 	string ret = this->chrome.getOuterHTML(this->stringUtils.BSTRToString(selector));
@@ -59,20 +51,17 @@ STDMETHODIMP CChromeOpsSoft::getOuterHTML(BSTR selector, BSTR* retVal)
 	return S_OK;
 }
 
-
 STDMETHODIMP CChromeOpsSoft::navigate(BSTR url, BSTR referrer)
 {
 	this->chrome.navigate(this->stringUtils.BSTRToString(url), this->stringUtils.BSTRToString(referrer));
 	return S_OK;
 }
 
-
 STDMETHODIMP CChromeOpsSoft::isLoadingFinished(int* retVal)
 {
 	*retVal = this->chrome.isLoadingFinished();
 	return S_OK;
 }
-
 
 STDMETHODIMP CChromeOpsSoft::runScript(BSTR expression, BSTR* retVal)
 {
@@ -93,13 +82,11 @@ STDMETHODIMP CChromeOpsSoft::captureScreenshot(BSTR format, int quality, int x, 
 	return S_OK;
 }
 
-
 STDMETHODIMP CChromeOpsSoft::inputText(BSTR selector, BSTR txt)
 {
 	this->chrome.inputText(this->stringUtils.BSTRToString(selector), this->stringUtils.BSTRToString(txt));
 	return S_OK;
 }
-
 
 STDMETHODIMP CChromeOpsSoft::getCookies(BSTR urls, BSTR* retVal)
 {
@@ -109,7 +96,6 @@ STDMETHODIMP CChromeOpsSoft::getCookies(BSTR urls, BSTR* retVal)
 	*retVal = this->stringUtils.stringToBSTR(ret);
 	return S_OK;
 }
-
 
 STDMETHODIMP CChromeOpsSoft::setCookie(BSTR name, BSTR value, BSTR url, BSTR domain, BSTR path, int secure, int httpOnly, BSTR sameSite, int expires)
 {
@@ -123,13 +109,11 @@ STDMETHODIMP CChromeOpsSoft::setCookie(BSTR name, BSTR value, BSTR url, BSTR dom
 	return S_OK;
 }
 
-
 STDMETHODIMP CChromeOpsSoft::setCookies(BSTR jsonCookies)
 {
 	this->chrome.setCookies(this->stringUtils.BSTRToString(jsonCookies));
 	return S_OK;
 }
-
 
 STDMETHODIMP CChromeOpsSoft::clearBrowserCache()
 {
@@ -137,13 +121,11 @@ STDMETHODIMP CChromeOpsSoft::clearBrowserCache()
 	return S_OK;
 }
 
-
 STDMETHODIMP CChromeOpsSoft::clearBrowserCookies()
 {
 	this->chrome.clearBrowserCookies();
 	return S_OK;
 }
-
 
 STDMETHODIMP CChromeOpsSoft::setCacheDisabled(int cacheDisabled)
 {
@@ -153,7 +135,25 @@ STDMETHODIMP CChromeOpsSoft::setCacheDisabled(int cacheDisabled)
 
 STDMETHODIMP CChromeOpsSoft::parseJson(BSTR jsonBStr, BSTR* retVal)
 {
-	
+	string uuidStr = this->jsonUtils.parseJson(this->stringUtils.BSTRToString(jsonBStr), &this->jsonCache);
+	*retVal = this->stringUtils.stringToBSTR(uuidStr);
+	return S_OK;
+}
 
+STDMETHODIMP CChromeOpsSoft::getJsonValue(BSTR uuidStr, BSTR keyPath, BSTR* retVal)
+{
+	string uuidKey = this->stringUtils.BSTRToString(uuidStr);
+	if (this->jsonCache.count(uuidKey) > 0) {
+		nlohmann::json cache = this->jsonCache[uuidKey];
+		if (cache.size()>0) {
+			std::cout << this->stringUtils.BSTRToString(keyPath) << std::endl;
+			nlohmann::json value = this->jsonUtils.getValueFromJson(cache, this->stringUtils.BSTRToString(keyPath));
+			string ret = value.dump();
+			*retVal = this->stringUtils.stringToBSTR(ret);
+		}
+	}
+	else {
+		*retVal = SysAllocString(L"");
+	}
 	return S_OK;
 }

@@ -4,6 +4,7 @@
 #include "curl/curl.h"
 
 namespace bp = boost::process;
+
 class ProcessUtils
 {
 public:

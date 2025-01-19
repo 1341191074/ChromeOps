@@ -80,14 +80,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_WINDOWS;_USRDLL;CURL_STATICLIB;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\apps\cplus\boost_1_86_0;../ConsoleApplication1/plugins;D:\apps\cplus\OpenSSL-Win32\include;D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-x86-debug-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\apps\cplus\boost_1_86_0_x86;../ConsoleApplication1/plugins;D:\apps\cplus\OpenSSL-Win32\include;D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-x86-debug-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\apps\cplus\boost_1_86_0\lib32-msvc-14.3;D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-x86-debug-static-ipv6-sspi-schannel\lib;D:\apps\cplus\OpenSSL-Win32\lib\VC\x86\MT;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\apps\cplus\boost_1_86_0_x86\lib32-msvc-14.3;D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-x86-debug-static-ipv6-sspi-schannel\lib;D:\apps\cplus\OpenSSL-Win32\lib\VC\x86\MT;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcrypto_static.lib;libssl_static.lib;crypt32.lib;libcurl_a_debug.lib;ws2_32.lib;winmm.lib;wldap32.lib;normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -97,7 +97,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_WINDOWS;_USRDLL;WIN32_LEAN_AND_MEAN;OPENSSL_STATIC;_CONSOLE;CURL_STATICLIB;_CRT_SECURE_NO_WARNINGS;BUILDING_LIBCURL;HTTP_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;_CONSOLE;CURL_STATICLIB;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../ConsoleApplication1/plugins;D:\apps\cplus\boost_1_86_0_x86;D:\apps\cplus\OpenSSL-Win32\include;D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-X86-release-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -109,7 +109,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-x86-release-static-ipv6-sspi-schannel\lib;D:\apps\cplus\boost_1_86_0_x86\lib32-msvc-14.3;D:\apps\cplus\OpenSSL-Win32\lib\VC\x86\MT;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>crypt32.lib;libcrypto_static.lib;libssl_static.lib;libcurl_a.lib;ws2_32.lib;winmm.lib;wldap32.lib;normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>crypt32.lib;libcurl_a.lib;wldap32.lib;ws2_32.lib;libcrypto_static.lib;libssl_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/NODEFAULTLIB:LIBCMTD.lib,libcpmtd.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -172,7 +172,7 @@
     <ClInclude Include="plugins\utils\HttpUtils.hpp" />
     <ClInclude Include="plugins\utils\JsonUtils.hpp" />
     <ClInclude Include="plugins\utils\ProcessUtils.hpp" />
-    <ClInclude Include="plugins\utils\StringUtils.h" />
+    <ClInclude Include="plugins\utils\StringUtils.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

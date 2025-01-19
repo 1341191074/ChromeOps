@@ -19,30 +19,30 @@ WScript.Echo "开始绑定"
 ss=chrome.chromeBind("localhost",9222)
 WScript.Echo "绑定成功"
 
-WScript.Echo "开始查询"
-ss=chrome.findTargetList()
-dim ary
-ary=Split(ss,"====")
-ss=ary(0)
-dim tab
-tab=Split(ss,"|||")
-WScript.Echo tab(0)
-ss=chrome.switchTab(tab(0))
+dim targetList
+targetList=chrome.findTargetList()
+WScript.Echo targetList
+dim uuid
+uuid=chrome.parseJson(targetList)
+WScript.Echo "parseJson = " & uuid
+dim jsonVal
+jsonVal = chrome.getJsonValue(uuid,"tabId")
+WScript.Echo "jsonVal = "& jsonVal
 
-
-call chrome.clearBrowserCache()
+'ss=chrome.switchTab(tab(0))
+'call chrome.clearBrowserCache()
 'call chrome.clearBrowserCookies()
 
-call chrome.navigate("https://www.baidu.com", "")
+'call chrome.navigate("https://www.baidu.com", "")
 
-dim finished 
+'dim finished 
 '//0=没有加载完成 1=加载完成
-finished = chrome.isLoadingFinished()
-while finished=0
-    WScript.Echo "等待……"
-    WScript.Sleep 500
-    finished = chrome.isLoadingFinished()
-wend
+'finished = chrome.isLoadingFinished()
+'while finished=0
+'    WScript.Echo "等待……"
+'    WScript.Sleep 500
+'    finished = chrome.isLoadingFinished()
+'wend
 
 'ss = chrome.getCookies("[""https://www.baidu.com""]")
 'WScript.Echo ss
@@ -54,4 +54,4 @@ wend
 WScript.Echo "8秒后自动关闭"
 WScript.Sleep 8000
 
-set cc = Nothing
+set chrome = Nothing
