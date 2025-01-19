@@ -25,7 +25,7 @@ private:
     std::string host;
     int port;
     std::vector<std::string> args;
-    PROCESS_INFORMATION pi;
+    bp::child chrome_process;
     int isBind; // -1=初始状态, 0=失败, 1=成功
     int isPageBind; // -1=初始状态, 0=失败, 1=成功
     std::string lastTab;
@@ -78,7 +78,7 @@ public:
 
             if (!b) {
                 this->chromeFullPath = chromeFullPath;
-                pi = this->processUtils.startChrome(this->chromeFullPath, this->args);
+                this->chrome_process = this->processUtils.startChrome(this->chromeFullPath, this->args);
                 //启动浏览器后尝试连接
                 std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             }

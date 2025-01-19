@@ -23,7 +23,7 @@ static void mylog(variant<int, string> var) {
     }
 }
 
-int main1()
+int main()
 {
     //SetConsoleOutputCP(CP_UTF8);
 
@@ -33,7 +33,8 @@ int main1()
     Chrome chrome;
     chrome.pushArgs("--remote-debugging-port=9222");
     chrome.pushArgs("--user-data-dir=E:\\test\\ud0");
-    chrome.launch("C:\\Users\\Reach\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe", true);
+    //chrome.launch("C:\\Users\\Reach\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe", true);
+    chrome.launch("C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe", true);
     int ret = chrome.chromeBind("localhost", 9222);
     string html = chrome.findTargetList();
     std::vector<std::string> tokens;
@@ -76,7 +77,7 @@ int main1()
 
 }
 
-int main() {
+int main1() {
 
     // 示例JSON字符串，包含数组
     CString jsonString = R"({
