@@ -99,7 +99,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;_USRDLL;WIN32_LEAN_AND_MEAN;OPENSSL_STATIC;_CONSOLE;CURL_STATICLIB;_CRT_SECURE_NO_WARNINGS;BUILDING_LIBCURL;HTTP_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../ConsoleApplication1/plugins;D:\apps\cplus\OpenSSL-Win32\include;D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-x86-release-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;D:\apps\cplus\boost_1_86_0_x86;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../ConsoleApplication1/plugins;D:\apps\cplus\websocketpp-0.8.2;D:\apps\cplus\boost_1_86_0_x86;D:\apps\cplus\OpenSSL-Win32\include;D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-X86-release-static-ipv6-sspi-schannel\include;E:\gitee\nlohmann-json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
