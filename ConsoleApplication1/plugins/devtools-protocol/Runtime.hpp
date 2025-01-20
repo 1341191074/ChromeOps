@@ -10,11 +10,10 @@ public:
 	Runtime(AsyncDriver* mdriver) : BaseDomain(mdriver) {
 		this->driver = mdriver;
 		this->sendCommandAndWait("Runtime.enable", {});
-		this->driver->registerCallback([this](string method, nlohmann::json msgObj) {
-			if ("Runtime.executionContextCreated" == method) {
-
-			}
-			});
+		//this->driver->registerCallback([this](string method, nlohmann::json msgObj) {
+		//	if ("Runtime.executionContextCreated" == method) {
+		//	}
+		//	});
 	}
 
 	void releaseObject(string objectId) {

@@ -41,3 +41,10 @@ namespace PageTypes {
 }
 #pragma endregion
 
+#pragma region Page
+struct TargetID : public Types {
+	string targetId;
+	TargetID(string tid) : targetId(tid) {};
+};
+#pragma endregion
+

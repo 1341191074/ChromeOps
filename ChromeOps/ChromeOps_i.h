@@ -398,6 +398,16 @@ EXTERN_C const IID IID_IChromeOpsSoft;
             /* [in] */ BSTR keyPath,
             /* [retval][out] */ BSTR *retVal) = 0;
         
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE createTarget( 
+            /* [in] */ BSTR url,
+            /* [retval][out] */ BSTR *retVal) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE closeTarget( 
+            /* [in] */ BSTR targetId) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE getLastTargetId( 
+            /* [retval][out] */ BSTR *retVal) = 0;
+        
     };
     
     
@@ -597,6 +607,22 @@ EXTERN_C const IID IID_IChromeOpsSoft;
             /* [in] */ BSTR keyPath,
             /* [retval][out] */ BSTR *retVal);
         
+        DECLSPEC_XFGVIRT(IChromeOpsSoft, createTarget)
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *createTarget )( 
+            IChromeOpsSoft * This,
+            /* [in] */ BSTR url,
+            /* [retval][out] */ BSTR *retVal);
+        
+        DECLSPEC_XFGVIRT(IChromeOpsSoft, closeTarget)
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *closeTarget )( 
+            IChromeOpsSoft * This,
+            /* [in] */ BSTR targetId);
+        
+        DECLSPEC_XFGVIRT(IChromeOpsSoft, getLastTargetId)
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *getLastTargetId )( 
+            IChromeOpsSoft * This,
+            /* [retval][out] */ BSTR *retVal);
+        
         END_INTERFACE
     } IChromeOpsSoftVtbl;
 
@@ -695,6 +721,15 @@ EXTERN_C const IID IID_IChromeOpsSoft;
 
 #define IChromeOpsSoft_getJsonValue(This,uuidStr,keyPath,retVal)	\
     ( (This)->lpVtbl -> getJsonValue(This,uuidStr,keyPath,retVal) ) 
+
+#define IChromeOpsSoft_createTarget(This,url,retVal)	\
+    ( (This)->lpVtbl -> createTarget(This,url,retVal) ) 
+
+#define IChromeOpsSoft_closeTarget(This,targetId)	\
+    ( (This)->lpVtbl -> closeTarget(This,targetId) ) 
+
+#define IChromeOpsSoft_getLastTargetId(This,retVal)	\
+    ( (This)->lpVtbl -> getLastTargetId(This,retVal) ) 
 
 #endif /* COBJMACROS */
 

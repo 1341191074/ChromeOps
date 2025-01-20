@@ -72,7 +72,7 @@ public:
 					if (obj.contains("method")) { // Events
 						for (const auto& callback : callbacks) {
 							string method = obj["method"];
-							callback(method, obj["params"]);
+							callback(method, obj);
 						}
 					}
 					else if (obj.contains("result") && obj.at("result").is_object()) {
