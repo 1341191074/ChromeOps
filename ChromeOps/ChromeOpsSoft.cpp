@@ -145,7 +145,7 @@ STDMETHODIMP CChromeOpsSoft::getJsonValue(BSTR uuidStr, BSTR keyPath, BSTR* retV
 	string uuidKey = this->stringUtils.BSTRToString(uuidStr);
 	if (this->jsonCache.count(uuidKey) > 0) {
 		nlohmann::json cache = this->jsonCache[uuidKey];
-		if (cache.size()>0) {
+		if (cache.size() > 0) {
 			std::cout << this->stringUtils.BSTRToString(keyPath) << std::endl;
 			nlohmann::json value = this->jsonUtils.getValueFromJson(cache, this->stringUtils.BSTRToString(keyPath));
 			string ret = value.dump();
@@ -155,5 +155,28 @@ STDMETHODIMP CChromeOpsSoft::getJsonValue(BSTR uuidStr, BSTR keyPath, BSTR* retV
 	else {
 		*retVal = SysAllocString(L"");
 	}
+	return S_OK;
+}
+
+
+STDMETHODIMP CChromeOpsSoft::createTarget(BSTR url, BSTR* retVal)
+{
+	string ret = this->chrome.createTarget(this->stringUtils.BSTRToString(url));
+	*retVal = this->stringUtils.stringToBSTR(ret);
+	return S_OK;
+}
+
+
+STDMETHODIMP CChromeOpsSoft::closeTarget(BSTR targetId)
+{
+	this->chrome.closeTarget(this->stringUtils.BSTRToString(targetId));
+	return S_OK;
+}
+
+
+STDMETHODIMP CChromeOpsSoft::getLastTargetId(BSTR* retVal)
+{
+	string ret = this->chrome.getLastTargetId();
+	*retVal = this->stringUtils.stringToBSTR(ret);
 	return S_OK;
 }

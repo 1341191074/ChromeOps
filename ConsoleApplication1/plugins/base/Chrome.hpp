@@ -28,7 +28,7 @@ private:
 	bp::child chrome_process;
 	int isBind; // -1=初始状态, 0=失败, 1=成功
 	int isPageBind; // -1=初始状态, 0=失败, 1=成功
-	std::string lastTab;
+	std::string currentTargetId;//当前标签的ID
 	std::map<std::string, std::string> targetsCache;
 
 public:
@@ -122,23 +122,23 @@ public:
 			// 访问数组中的对象并获取字段值
 			string n = item["type"];
 			if ("page" == n) {
-				string tabId = item["id"];
+				string targetId = item["id"];
 				string title = item["title"];
 				string webSocketDebuggerUrl = item["webSocketDebuggerUrl"];
-				this->targetsCache[tabId] = webSocketDebuggerUrl;
+				this->targetsCache[targetId] = webSocketDebuggerUrl;
 
-				retJson["tabId"] = tabId;
+				retJson["targetId"] = targetId;
 				retJson["title"] = title;
 			}
 		}
 		return retJson.dump();
 	}
 
-	int switchTab(std::string tabId)
+	int switchTab(std::string targetId)
 	{
 		if (this->isBind == 1) {
 			this->isPageBind = -1;
-			std::string url = this->targetsCache[tabId];
+			std::string url = this->targetsCache[targetId];
 
 			this->pageDriver->connect(url, [this](bool success) {
 				if (success) {
@@ -152,7 +152,7 @@ public:
 			while (this->isPageBind == -1) {//初始状态下，等待绑定成功或者失败
 				std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Simulate running for a while
 			}
-			this->lastTab = tabId;
+			this->currentTargetId = targetId;
 
 			this->dom = new DOM(this->pageDriver);
 			this->runtime = new Runtime(this->pageDriver);
@@ -251,6 +251,20 @@ public:
 	void setCacheDisabled(bool cacheDisabled = false) {
 		this->network->setCacheDisabled(cacheDisabled);
 	}
+
+	string createTarget(string url) {
+		return this->target->createTarget(url);
+	}
+
+	void closeTarget(string targetId) {
+		this->target->closeTarget(targetId);
+	}
+
+	string getLastTargetId() {
+		TargetID targetId = this->target->getLastTargetId();
+		return targetId.targetId;
+	}
+
 #pragma endregion
 
 };

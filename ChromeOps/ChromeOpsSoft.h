@@ -75,6 +75,9 @@ public:
 	STDMETHOD(captureFullScreenshot)(BSTR format, int quality, BSTR imgFullPath);
 	STDMETHOD(parseJson)(BSTR jsonBStr, BSTR* retVal);
 	STDMETHOD(getJsonValue)(BSTR uuidStr, BSTR keyPath, BSTR* retVal);
+	STDMETHOD(createTarget)(BSTR url, BSTR* retVal);
+	STDMETHOD(closeTarget)(BSTR targetId);
+	STDMETHOD(getLastTargetId)(BSTR* retVal);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ChromeOpsSoft), CChromeOpsSoft)

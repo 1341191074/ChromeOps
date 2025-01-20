@@ -25,7 +25,7 @@ static void mylog(variant<int, string> var) {
 
 int main()
 {
-	//SetConsoleOutputCP(CP_UTF8);
+	SetConsoleOutputCP(CP_UTF8);
 	curl_global_init(CURL_GLOBAL_ALL);//全局只执行\1次
 
 	StringUtils stringUtils;
@@ -36,11 +36,16 @@ int main()
 	//chrome.launch("C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe", true);
 	int ret = chrome.chromeBind("localhost", 9222);
 	string jsonObj = chrome.findTargetList();
-
+	std::cout << jsonObj << std::endl;
 	std::map<string, nlohmann::json> jsonCache;
 	JsonUtils jsonUtils;
 	string uuidStr = jsonUtils.parseJson(jsonObj, &jsonCache);
 	std::cout << uuidStr << std::endl;
+	string targetId = jsonUtils.getValueFromJson(jsonCache[uuidStr], "targetId");
+	std::cout << "targetId = " << targetId << std::endl;
+
+	string lid = chrome.getLastTargetId();
+	std::cout << "lid = " << lid << std::endl;
 
 	//std::vector<std::string> tokens;
 	//stringUtils.split(html, '====', tokens);
