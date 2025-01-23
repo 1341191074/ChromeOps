@@ -1,4 +1,5 @@
 #pragma once
+#include <windows.h>
 #include <comdef.h>
 #include <string>
 #include <vector>
@@ -45,47 +46,20 @@ public:
 	}
 
 	std::string BSTRToString(BSTR bstr) {
-		// 检查BSTR是否为空
-		if (bstr == nullptr) {
-			throw std::invalid_argument("BSTR is null");
+		// 获取转换后的字符串所需的字节数，包括空终止符
+		int len = WideCharToMultiByte(CP_UTF8, 0, bstr, -1, NULL, 0, NULL, NULL);
+		if (len == 0) {
+			// 如果转换失败，WideCharToMultiByte 会返回 0
+			throw std::runtime_error("WideCharToMultiByte failed");
 		}
 		
-		// 获取BSTR的长度（以字节为单位），并转换为字符数（考虑到Unicode）
-		size_t length = SysStringLen(bstr);
-		if (length == 0) {
-			return "";
-		}
+		char* szUtf8 = new char[len + 1];
+		// 执行转换
+		WideCharToMultiByte(CP_UTF8, 0, bstr, -1, szUtf8, len - 1, NULL, NULL);
 
-		// 创建一个std::string对象，并为其分配足够的空间来存储转换后的字符串
-		std::string result(length, ' ');
-
-		// 使用WideCharToMultiByte函数将BSTR转换为多字节字符串（ANSI）
-		// 在这里，我们假设目标编码是UTF-8。然而，由于std::string在C++中不直接支持UTF-8，
-		// 我们可能需要进一步处理来确保正确的编码。为了简化示例，这里使用系统默认的多字节编码。
-		// 如果需要UTF-8编码，请改用CP_UTF8作为CodePage参数，并相应地调整result的类型或处理方式。
-		int bytesCopied = WideCharToMultiByte(
-			CP_UTF8,            // Code page to use for translation
-			0,                 // Performance and mapping flags
-			bstr,              // Pointer to the Unicode string
-			length,            // Number of characters in the string
-			&result[0],        // Pointer to the buffer for the new string
-			static_cast<int>(result.size()), // Size of the buffer, in bytes
-			nullptr,           // Pointer to character not used in translation
-			nullptr            // Pointer to flag set when default chars are used
-		);
-		// 检查转换是否成功
-		if (bytesCopied == 0) {
-			// 转换失败，抛出异常
-			throw std::runtime_error("Failed to convert BSTR to std::string");
-		}
-
-		// 调整std::string的大小以匹配实际转换的字节数（可能不是完整的字符数，因为多字节编码）
-		// 注意：这里我们假设WideCharToMultiByte没有截断字符，并且转换后的字节数恰好是字符数乘以字符大小。
-		// 这在大多数情况下是成立的，但不一定总是如此，特别是当使用多字节编码时。
-		// 为了更安全的处理，我们可能需要更复杂的逻辑来处理可能的截断和不完全的字符。
-		// 然而，为了简化示例，我们在这里做这种假设。
-		result.resize(bytesCopied);
-		return result;
+		std::string strUtf8(szUtf8);
+		delete[] szUtf8;
+		return strUtf8;
 	}
 
 	BSTR stringToBSTR(std::string str) {

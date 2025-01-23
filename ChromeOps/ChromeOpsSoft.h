@@ -25,11 +25,16 @@ class ATL_NO_VTABLE CChromeOpsSoft :
 private:
 	StringUtils stringUtils;
 	JsonUtils jsonUtils;
-	Chrome chrome;
+	Chrome* chrome;
 
 	std::map<string, nlohmann::json> jsonCache;
 public:
 	CChromeOpsSoft()
+	{
+		chrome = new Chrome();
+	}
+
+	~CChromeOpsSoft()
 	{
 	}
 
@@ -48,8 +53,8 @@ public:
 	}
 
 	void FinalRelease() {
+		delete this->chrome;
 		this->jsonCache.clear();
-		this->chrome.stop();
 	}
 
 public:
