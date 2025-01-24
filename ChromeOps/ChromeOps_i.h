@@ -306,8 +306,7 @@ EXTERN_C const IID IID_IChromeOpsSoft;
     IChromeOpsSoft : public IDispatch
     {
     public:
-        virtual /* [id] */ HRESULT STDMETHODCALLTYPE ping( 
-            /* [in] */ BSTR str,
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE getVersion( 
             /* [retval][out] */ BSTR *ret) = 0;
         
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE chromeBind( 
@@ -473,10 +472,9 @@ EXTERN_C const IID IID_IChromeOpsSoft;
             /* [annotation][out] */ 
             _Out_opt_  UINT *puArgErr);
         
-        DECLSPEC_XFGVIRT(IChromeOpsSoft, ping)
-        /* [id] */ HRESULT ( STDMETHODCALLTYPE *ping )( 
+        DECLSPEC_XFGVIRT(IChromeOpsSoft, getVersion)
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *getVersion )( 
             IChromeOpsSoft * This,
-            /* [in] */ BSTR str,
             /* [retval][out] */ BSTR *ret);
         
         DECLSPEC_XFGVIRT(IChromeOpsSoft, chromeBind)
@@ -659,8 +657,8 @@ EXTERN_C const IID IID_IChromeOpsSoft;
     ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
 
 
-#define IChromeOpsSoft_ping(This,str,ret)	\
-    ( (This)->lpVtbl -> ping(This,str,ret) ) 
+#define IChromeOpsSoft_getVersion(This,ret)	\
+    ( (This)->lpVtbl -> getVersion(This,ret) ) 
 
 #define IChromeOpsSoft_chromeBind(This,host,port,retVal)	\
     ( (This)->lpVtbl -> chromeBind(This,host,port,retVal) ) 

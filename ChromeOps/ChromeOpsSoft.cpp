@@ -4,11 +4,11 @@
 #include "ChromeOpsSoft.h"
 
 // CChromeOpsSoft
-STDMETHODIMP CChromeOpsSoft::ping(BSTR str, BSTR* retVal)
+STDMETHODIMP CChromeOpsSoft::getVersion(BSTR* retVal)
 {
-    CComBSTR pong(L"pong ");
-    *retVal = pong.Detach();
-    ::SysFreeString(pong);
+    CComBSTR version(L"1.0.0.1");
+    *retVal = version.Detach();
+    ::SysFreeString(version);
     return S_OK;
 }
 

@@ -59,7 +59,7 @@ public:
 
 public:
 	// 测试方法
-	STDMETHOD(ping)(BSTR str, BSTR* ret);
+	STDMETHOD(getVersion)(BSTR* ret);
 	STDMETHOD(chromeBind)(BSTR host, int port, int* retVal);
 	STDMETHOD(pushArgs)(BSTR arg);
 	STDMETHOD(launch)(BSTR chromeFullPath, int tryBind, int* retVal);
