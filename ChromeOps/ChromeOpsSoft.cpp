@@ -6,7 +6,7 @@
 // CChromeOpsSoft
 STDMETHODIMP CChromeOpsSoft::getVersion(BSTR* retVal)
 {
-    CComBSTR version(L"1.0.0.1");
+    CComBSTR version(L"1.0.0.2");
     *retVal = version.Detach();
     ::SysFreeString(version);
     return S_OK;
@@ -148,7 +148,7 @@ STDMETHODIMP CChromeOpsSoft::getJsonValue(BSTR uuidStr, BSTR keyPath, BSTR* retV
         if (cache.size() > 0) {
             std::cout << this->stringUtils.BSTRToString(keyPath) << std::endl;
             nlohmann::json value = this->jsonUtils.getValueFromJson(cache, this->stringUtils.BSTRToString(keyPath));
-            string ret = value.dump();
+            string ret = value.get<string>();
             *retVal = this->stringUtils.stringToBSTR(ret);
         }
     }

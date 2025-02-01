@@ -29,20 +29,27 @@ public:
 	}
 
 	std::string GBKToUTF8(const std::string& strGBK) {
-		int len = MultiByteToWideChar(CP_ACP, 0, strGBK.c_str(), -1, NULL, 0);
-		wchar_t* wszUtf8 = new wchar_t[len];
-		memset(wszUtf8, 0, len * sizeof(wchar_t));
-		MultiByteToWideChar(CP_ACP, 0, strGBK.c_str(), -1, wszUtf8, len);
+		int lenWideChar = MultiByteToWideChar(CP_ACP, 0, strGBK.c_str(), -1, NULL, 0);
+		if (lenWideChar == 0) {
+			throw std::runtime_error("MultiByteToWideChar failed");
+		}
 
-		len = WideCharToMultiByte(CP_UTF8, 0, wszUtf8, -1, NULL, 0, NULL, NULL);
-		char* szUtf8 = new char[len + 1];
-		memset(szUtf8, 0, len + 1);
-		WideCharToMultiByte(CP_UTF8, 0, wszUtf8, -1, szUtf8, len, NULL, NULL);
+		wchar_t* wszUtf16 = new wchar_t[lenWideChar];
+		MultiByteToWideChar(CP_ACP, 0, strGBK.c_str(), -1, wszUtf16, lenWideChar);
 
-		std::string strUtf8(szUtf8);
+		int lenUtf8 = WideCharToMultiByte(CP_UTF8, 0, wszUtf16, -1, NULL, 0, NULL, NULL);
+		if (lenUtf8 == 0) {
+			delete[] wszUtf16;
+			throw std::runtime_error("WideCharToMultiByte failed");
+		}
+
+		char* szUtf8 = new char[lenUtf8];
+		WideCharToMultiByte(CP_UTF8, 0, wszUtf16, -1, szUtf8, lenUtf8, NULL, NULL);
+
+		std::string strResult(szUtf8);
 		delete[] szUtf8;
-		delete[] wszUtf8;
-		return strUtf8;
+		delete[] wszUtf16;
+		return strResult;
 	}
 
 	std::string BSTRToString(BSTR bstr) {
@@ -53,9 +60,9 @@ public:
 			throw std::runtime_error("WideCharToMultiByte failed");
 		}
 		
-		char* szUtf8 = new char[len + 1];
+		char* szUtf8 = new char[len];
 		// Ö´ÐÐ×ª»»
-		WideCharToMultiByte(CP_UTF8, 0, bstr, -1, szUtf8, len - 1, NULL, NULL);
+		WideCharToMultiByte(CP_UTF8, 0, bstr, -1, szUtf8, len, NULL, NULL);
 
 		std::string strUtf8(szUtf8);
 		delete[] szUtf8;

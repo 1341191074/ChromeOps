@@ -5,8 +5,6 @@ dim ss
 '对象值必须使用SET关键字赋值
 set chrome = CreateObject("ChromeOps.soft")
 
-WScript.Echo "启动启动启动启动"
-
 '添加启动参数
 call chrome.pushArgs("--remote-debugging-port=9222")
 call chrome.pushArgs("--user-data-dir=E:\\test\\ud0")
@@ -24,9 +22,9 @@ WScript.Echo targetList
 dim uuid
 uuid=chrome.parseJson(targetList)
 WScript.Echo "parseJson = " & uuid
-'dim jsonVal
-'jsonVal = chrome.getJsonValue(uuid,"tabId")
-'WScript.Echo "jsonVal = "& jsonVal
+dim jsonVal
+jsonVal = chrome.getJsonValue(uuid,"targetId")
+WScript.Echo "jsonVal = "& jsonVal
 
 'ss=chrome.switchTab(tab(0))
 'call chrome.clearBrowserCache()
