@@ -140,14 +140,32 @@ STDMETHODIMP CChromeOpsSoft::parseJson(BSTR jsonBStr, BSTR* retVal)
     return S_OK;
 }
 
-STDMETHODIMP CChromeOpsSoft::getJsonValue(BSTR uuidStr, BSTR keyPath, BSTR* retVal)
+STDMETHODIMP CChromeOpsSoft::getJsonArraySize(BSTR uuidStr, int* retVal)
+{
+    string uuidKey = this->stringUtils.BSTRToString(uuidStr);
+    if (this->jsonCache.count(uuidKey) > 0) {
+        nlohmann::json cache = this->jsonCache[uuidKey];
+        *retVal = cache.size();
+    }
+    else {
+        *retVal = 0;
+    }
+    return S_OK;
+}
+
+STDMETHODIMP CChromeOpsSoft::getJsonValue(BSTR uuidStr, int idx, BSTR keyPath, BSTR* retVal)
 {
     string uuidKey = this->stringUtils.BSTRToString(uuidStr);
     if (this->jsonCache.count(uuidKey) > 0) {
         nlohmann::json cache = this->jsonCache[uuidKey];
         if (cache.size() > 0) {
-            std::cout << this->stringUtils.BSTRToString(keyPath) << std::endl;
-            nlohmann::json value = this->jsonUtils.getValueFromJson(cache, this->stringUtils.BSTRToString(keyPath));
+            nlohmann::json value;
+            if (idx > -1) { //大于-1表示为数组
+                value = this->jsonUtils.getValueFromJson(cache[idx], this->stringUtils.BSTRToString(keyPath));
+            }
+            else {
+                value = this->jsonUtils.getValueFromJson(cache, this->stringUtils.BSTRToString(keyPath));
+            }
             string ret = value.get<string>();
             *retVal = this->stringUtils.stringToBSTR(ret);
         }

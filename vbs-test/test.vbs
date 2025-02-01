@@ -23,8 +23,11 @@ dim uuid
 uuid=chrome.parseJson(targetList)
 WScript.Echo "parseJson = " & uuid
 dim jsonVal
-jsonVal = chrome.getJsonValue(uuid,"targetId")
+jsonVal = chrome.getJsonValue(uuid,0,"targetId")
 WScript.Echo "jsonVal = "& jsonVal
+dim size 
+size = chrome.getJsonArraySize(uuid)
+WScript.Echo "size = "& size
 
 'ss=chrome.switchTab(tab(0))
 'call chrome.clearBrowserCache()

@@ -118,17 +118,19 @@ public:
 		nlohmann::json parsed_json = nlohmann::json::parse(res);
 		// 遍历JSON数组
 		nlohmann::json retJson;
+		nlohmann::json jsonObj;
 		for (const auto& item : parsed_json) {
 			// 访问数组中的对象并获取字段值
 			string n = item["type"];
 			if ("page" == n) {
-				string targetId = item["id"];
-				string title = item["title"];
+				string targetId = item["id"].get<string>();
+				string title = item["title"].get<string>();
 				string webSocketDebuggerUrl = item["webSocketDebuggerUrl"];
 				this->targetsCache[targetId] = webSocketDebuggerUrl;
 
-				retJson["targetId"] = targetId;
-				retJson["title"] = title;
+				jsonObj["targetId"] = targetId;
+				jsonObj["title"] = title;
+				retJson.push_back(jsonObj);
 			}
 		}
 		return retJson.dump();
