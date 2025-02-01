@@ -40,8 +40,7 @@ int main()
 	std::map<string, nlohmann::json> jsonCache;
 	JsonUtils jsonUtils;
 	string uuidStr = jsonUtils.parseJson(jsonObj, &jsonCache);
-	std::cout << uuidStr << std::endl;
-	string targetId = jsonUtils.getValueFromJson(jsonCache[uuidStr], "targetId");
+	string targetId = jsonUtils.getValueFromJson(jsonCache[uuidStr][0], "targetId");
 	std::cout << "targetId = " << targetId << std::endl;
 
 	string lid = chrome.getLastTargetId();

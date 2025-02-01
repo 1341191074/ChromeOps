@@ -198,6 +198,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <RegisterOutput>true</RegisterOutput>
       <AdditionalLibraryDirectories>D:\apps\cplus\curl-8.11.1\builds\libcurl-vc17-x86-release-static-ipv6-sspi-schannel\lib;D:\apps\cplus\boost_1_86_0_x86\lib32-msvc-14.3;D:\apps\cplus\OpenSSL-Win32\lib\VC\x86\MT;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <PerUserRedirection>true</PerUserRedirection>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

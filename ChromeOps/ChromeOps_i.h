@@ -394,6 +394,7 @@ EXTERN_C const IID IID_IChromeOpsSoft;
         
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE getJsonValue( 
             /* [in] */ BSTR uuidStr,
+            /* [in] */ int idx,
             /* [in] */ BSTR keyPath,
             /* [retval][out] */ BSTR *retVal) = 0;
         
@@ -406,6 +407,10 @@ EXTERN_C const IID IID_IChromeOpsSoft;
         
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE getLastTargetId( 
             /* [retval][out] */ BSTR *retVal) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE getJsonArraySize( 
+            /* [in] */ BSTR uuidStr,
+            /* [retval][out] */ int *retVal) = 0;
         
     };
     
@@ -602,6 +607,7 @@ EXTERN_C const IID IID_IChromeOpsSoft;
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *getJsonValue )( 
             IChromeOpsSoft * This,
             /* [in] */ BSTR uuidStr,
+            /* [in] */ int idx,
             /* [in] */ BSTR keyPath,
             /* [retval][out] */ BSTR *retVal);
         
@@ -620,6 +626,12 @@ EXTERN_C const IID IID_IChromeOpsSoft;
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *getLastTargetId )( 
             IChromeOpsSoft * This,
             /* [retval][out] */ BSTR *retVal);
+        
+        DECLSPEC_XFGVIRT(IChromeOpsSoft, getJsonArraySize)
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *getJsonArraySize )( 
+            IChromeOpsSoft * This,
+            /* [in] */ BSTR uuidStr,
+            /* [retval][out] */ int *retVal);
         
         END_INTERFACE
     } IChromeOpsSoftVtbl;
@@ -717,8 +729,8 @@ EXTERN_C const IID IID_IChromeOpsSoft;
 #define IChromeOpsSoft_parseJson(This,jsonBStr,retVal)	\
     ( (This)->lpVtbl -> parseJson(This,jsonBStr,retVal) ) 
 
-#define IChromeOpsSoft_getJsonValue(This,uuidStr,keyPath,retVal)	\
-    ( (This)->lpVtbl -> getJsonValue(This,uuidStr,keyPath,retVal) ) 
+#define IChromeOpsSoft_getJsonValue(This,uuidStr,idx,keyPath,retVal)	\
+    ( (This)->lpVtbl -> getJsonValue(This,uuidStr,idx,keyPath,retVal) ) 
 
 #define IChromeOpsSoft_createTarget(This,url,retVal)	\
     ( (This)->lpVtbl -> createTarget(This,url,retVal) ) 
@@ -728,6 +740,9 @@ EXTERN_C const IID IID_IChromeOpsSoft;
 
 #define IChromeOpsSoft_getLastTargetId(This,retVal)	\
     ( (This)->lpVtbl -> getLastTargetId(This,retVal) ) 
+
+#define IChromeOpsSoft_getJsonArraySize(This,uuidStr,retVal)	\
+    ( (This)->lpVtbl -> getJsonArraySize(This,uuidStr,retVal) ) 
 
 #endif /* COBJMACROS */
 
