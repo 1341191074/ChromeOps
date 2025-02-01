@@ -1,12 +1,9 @@
 '所有变量先执行后使用选项
 option Explicit
-dim cc
 dim chrome
 dim ss
 '对象值必须使用SET关键字赋值
 set chrome = CreateObject("ChromeOps.soft")
-
-WScript.Echo "启动启动启动启动"
 
 '添加启动参数
 call chrome.pushArgs("--remote-debugging-port=9222")
@@ -15,9 +12,9 @@ call chrome.pushArgs("--user-data-dir=E:\\test\\ud0")
 'call cc.launch("C:\\Users\\Reach\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe")
 'call chrome.launch("C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe",false)
 'WScript.Sleep 200
-WScript.Echo "开始绑定"
-ss=chrome.chromeBind("localhost",9222)
-WScript.Echo "绑定成功"
+'WScript.Echo "开始绑定"
+'ss=chrome.chromeBind("localhost",9222)
+'WScript.Echo "绑定成功"
 
 dim targetList
 targetList=chrome.findTargetList()
@@ -26,7 +23,7 @@ dim uuid
 uuid=chrome.parseJson(targetList)
 WScript.Echo "parseJson = " & uuid
 dim jsonVal
-jsonVal = chrome.getJsonValue(uuid,"tabId")
+jsonVal = chrome.getJsonValue(uuid,"targetId")
 WScript.Echo "jsonVal = "& jsonVal
 
 'ss=chrome.switchTab(tab(0))
@@ -51,7 +48,7 @@ WScript.Echo "jsonVal = "& jsonVal
 'call chrome.captureFullScreenshot("png", 100, "output1.png")
 'call chrome.captureFullScreenshot("jpeg", 100, "output2.jpg")
 
-WScript.Echo "8秒后自动关闭"
-WScript.Sleep 8000
+WScript.Echo "1秒后自动关闭"
+WScript.Sleep 1000
 
 set chrome = Nothing

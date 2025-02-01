@@ -30,7 +30,7 @@ interface IComponentRegistrar : IDispatch
 ]
 interface IChromeOpsSoft : IDispatch
 {
-	[id(1)] HRESULT ping([in]BSTR str, [out, retval]BSTR* ret);
+	[id(1)] HRESULT getVersion([out, retval]BSTR* ret);
 	[id(2)] HRESULT chromeBind([in]BSTR host, [in]int port, [out, retval]int* retVal);
 	[id(3)] HRESULT pushArgs([in]BSTR arg);
 	[id(4)] HRESULT launch([in]BSTR chromeFullPath, [in]int tryBind, [out, retval]int* retVal);
