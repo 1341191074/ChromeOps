@@ -1,57 +1,41 @@
-'所有变量先执行后使用选项
-option Explicit
-dim chrome
-dim ss
-'对象值必须使用SET关键字赋值
-set chrome = CreateObject("ChromeOps.soft")
+Set chrome = CreateObject("ChromeOps.soft")
 
 '添加启动参数
 call chrome.pushArgs("--remote-debugging-port=9222")
-call chrome.pushArgs("--user-data-dir=E:\\test\\ud0")
-'启动浏览器
-'call cc.launch("C:\\Users\\Reach\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe")
-'call chrome.launch("C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe",false)
-'WScript.Sleep 200
-'WScript.Echo "开始绑定"
-'ss=chrome.chromeBind("localhost",9222)
-'WScript.Echo "绑定成功"
-
-dim targetList
-targetList=chrome.findTargetList()
-WScript.Echo targetList
-dim uuid
-uuid=chrome.parseJson(targetList)
-WScript.Echo "parseJson = " & uuid
-dim jsonVal
-jsonVal = chrome.getJsonValue(uuid,0,"targetId")
-WScript.Echo "jsonVal = "& jsonVal
-dim size 
+Call chrome.pushArgs("--user-data-dir=E:\\test\\ud0")
+Call chrome.launch("C:\\Users\\Reach\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe", True)
+targetList = chrome.findTargetList()
+uuid = chrome.parseJson(targetList)
 size = chrome.getJsonArraySize(uuid)
-WScript.Echo "size = "& size
+WScript.Echo "size = " & size
+For idx=0 to size-1
+    ' 第二个参数如果是-1 ，则认为是对象，反之则是数组
+    targetId = chrome.getJsonValue(uuid, idx, "targetId")
+    title = chrome.getJsonValue(uuid, idx, "title")
+    WScript.Echo "targetId = "&targetId&" , title = "&title
+Next
 
-'ss=chrome.switchTab(tab(0))
-'call chrome.clearBrowserCache()
-'call chrome.clearBrowserCookies()
+isBind = chrome.switchTab(targetId)
+If isBind = 1 Then 
+    urls = "https://tieba.baidu.com/|https://www.baidu.com/|https://www.csdn.net/"
+    'ary = Split(urls, chr(10))
+    ary = Split(urls, "|")
+    aryLen = UBound(ary)
+    For idx = 0 To aryLen
+        Call chrome.navigate(ary(idx), "")
+        '//0=没有加载完成 1=加载完成
+        finished = chrome.isLoadingFinished()
+        While finished = 0
+        	' WScript.Echo
+            WScript.Echo "等待……"
+            Delay 200
+            finished = chrome.isLoadingFinished()
+        Wend
+        picName = "e:\test\" & idx & ".jpg"
+        WScript.Echo "加载完成"&ary(idx)&"，准备截图" & picName
+        'Call chrome.captureFullScreenshot("jpeg", 100, picName)
+        Call chrome.captureScreenshot("jpeg", 100, 0, 0, 0, 0, 1.0, picName)
+    Next
+End If
 
-'call chrome.navigate("https://www.baidu.com", "")
-
-'dim finished 
-'//0=没有加载完成 1=加载完成
-'finished = chrome.isLoadingFinished()
-'while finished=0
-'    WScript.Echo "等待……"
-'    WScript.Sleep 500
-'    finished = chrome.isLoadingFinished()
-'wend
-
-'ss = chrome.getCookies("[""https://www.baidu.com""]")
-'WScript.Echo ss
-
-'call chrome.captureScreenshot("jpeg", 100, 0, 0, 2094, 2094, 1.0, "output.jpg")
-'call chrome.captureFullScreenshot("png", 100, "output1.png")
-'call chrome.captureFullScreenshot("jpeg", 100, "output2.jpg")
-
-WScript.Echo "1秒后自动关闭"
-WScript.Sleep 1000
-
-set chrome = Nothing
+Set chrome = Nothing

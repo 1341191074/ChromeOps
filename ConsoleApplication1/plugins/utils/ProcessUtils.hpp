@@ -57,7 +57,6 @@ public:
 
 			// 检查请求结果
 			if (res == CURLE_OK) {
-				printf("Connection successful!\n");
 				return true;
 			}
 
