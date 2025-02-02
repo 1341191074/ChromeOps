@@ -72,7 +72,7 @@ public:
 	/// <param name="scale">,Page scale factor.</param>
 	/// <returns>Base64-encoded image data. (Encoded as a base64 string when passed over JSON)</returns>
 	string _captureScreenshot(string format, int quality, PageTypes::Clip* clip, bool captureBeyondViewport = false, bool fromSurface = true) {
-		map<string, std::variant<int, string, bool, float, nlohmann::json>> params;
+ 		map<string, std::variant<int, string, bool, float, nlohmann::json>> params;
 		params["format"] = format;
 		params["quality"] = quality;
 		params["captureBeyondViewport"] = captureBeyondViewport; // Defaults to false
@@ -81,7 +81,7 @@ public:
 			nlohmann::json j = nlohmann::json{ {"x", clip->x}, {"y", clip->y}, {"width", clip->width}, {"height", clip->height}, {"scale", clip->scale} };
 			params["clip"] = j;
 		}
-		nlohmann::json retJson = this->sendCommandAndWait("Page.captureScreenshot", params, 10000);
+		nlohmann::json retJson = this->sendCommandAndWait("Page.captureScreenshot", params, 20000);
 		if (retJson.contains("data")) {
 			return retJson["data"];
 		}
